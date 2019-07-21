@@ -1,0 +1,142 @@
+{template 'common/header'}
+<div class="clearfix">
+
+<ul class="nav nav-tabs">
+	<li {if empty($status)}class="active"{/if}>
+        <a href="{php echo $this->createWebUrl('order')}">全部订单</a>
+    </li>
+    <li {if $status==1}class="active"{/if}>
+        <a href="{php echo $this->createWebUrl('order',array('status'=>1))}">已解锁</a>
+    </li>
+    <li {if $status==2}class="active"{/if}>
+        <a href="{php echo $this->createWebUrl('order',array('status'=>2))}">未解锁</a>
+    </li>
+</ul>
+<div class="panel-body">
+    <form action="" method="get" class="form-horizontal" role="form">
+        <div class="panel panel-default">
+            <div class="panel-heading">筛选</div>
+            <div class="panel-body">
+                <input type="hidden" name="c" value="site">
+                <input type="hidden" name="a" value="entry">
+                <input type="hidden" name="m" value="hc_face">
+                <input type="hidden" name="do" value="order">
+                <input type="hidden" name="status" value="{$status}">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">会员昵称</label>
+                    <div class="col-xs-12 col-sm-4 col-lg-4">
+                        <input class="form-control" name="keyword" type="text" value="{$keyword}" placeholder="请输入会员昵称">
+                    </div>
+                    <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                </div>
+            </div>
+        </div>
+		<div class="panel panel-default">
+		    <div class="panel-body">
+		        <p>累计收益：<b>{$all}</b></p>
+		        <p>今日收益：<b>{$today}</b></p>
+		    </div>
+		</div>
+    </form>
+</div>
+	<script type="text/javascript">
+		$("#search").click(function(){
+			$('#form1')[0].submit();
+		})
+	</script>
+
+	<div class="order-list">
+		<div class="panel-body table-responsive collapse in" id="order-template-item-4" style="padding: 0;">
+			<table class="table table-bordered">
+				<thead style="background-color: #FFFFFF;">
+					<tr>
+						<th style="width:10%">ID</th>
+						<th style="width:20%; text-align:center;">解锁类型</th>
+						<th style="width:20%; text-align:center;">买家</th>
+						<th style="width:10%; text-align:center;">解锁状态</th>
+						<th style="width:10%; text-align:center;">金额</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+
+		<div class="panel panel-default">
+			{loop $list $index $item}
+			<div class="panel-heading clearfix" style="padding: 10px 15px;">
+				<div class="pull-left">
+					<b>商户单号: {$item['trade_no']}</b>
+				</div>
+			</div>
+			<div class="panel-body table-responsive">
+				<table class="table table-bordered">
+					<tbody>
+						<tr>
+							<td style="width: 10%;vertical-align: middle;">
+								<center>{$item['id']}</center>
+							</td>
+							<td class="text-center" style="width:20%;vertical-align: middle;">
+									{if $item['type']=='bz'}
+									<span class="label label-warning">鼻相解读[面相]</span>
+									{elseif $item['type']=='sy'}
+									<span class="label label-success">事业运势报告[面相]</span>
+									{elseif $item['type']=='qg'}
+									<span class="label label-danger">情感运势报告[面相]</span>
+									{elseif $item['type']=='bg'}
+									<span class="label label-default">面相报告</span>
+									{elseif $item['type']=='sm'}
+									<span class="label label-danger">凶吉福祸[手相]</span>
+									{elseif $item['type']=='ys'}
+									<span class="label label-success">一生运势[手相]</span>
+									{elseif $item['type']=='hd'}
+									<span class="label label-default">手相报告</span>
+									{/if}
+							</td>
+							<td class="goods-info line-feed" style="width:20%;vertical-align: middle;">
+								<div class="img">
+									<img width="50" height="50" class="oscrollLoading" src="{media $item['avatar']}" data-url="{media $item['avatar']}" onerror="this.src='/web/resource/images/nopic-small.jpg'">
+									<span>{$item['nickname']}</span>
+								</div>
+							</td>
+							<td class="text-center" style="width:10%;vertical-align: middle;">
+								{if $item['status']==1}
+									<span class="label label-warning">已解锁</span>
+								{else}
+									<span class="label label-success">未解锁</span>
+								{/if}
+							</td>
+							<td class="text-center" style="width:10%;vertical-align: middle;">
+								{$item['money']}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="panel-heading clearfix" style="padding: 10px 15px;">
+				<div class="pull-left">下单时间：{php echo date('Y-m-d H:i:s',$item['createtime']);}</div>
+				<div class="pull-right">OPENID：{$item['openid']}</div>
+			</div>
+			{/loop}
+		</div>
+		<div id="de1" style="margin-top: 15px;">
+			{$page}
+		</div>
+
+</div>
+{template 'common/footer'}
+
+<script type="text/javascript">
+$(".exprecode").blur(function(){
+
+	var code = $(this).val();
+	var id = $(this).attr('data-id');
+    $.ajax({
+	    type: "POST",
+	    url: "{php echo $this->createWebUrl('Order_post',array('act'=>'addexprecode'));php}",
+	    data: {id:id,code:code},
+	    dataType: "json",
+	    success: function(data){
+	        alert('编辑成功');
+	    }
+	});
+})
+</script>

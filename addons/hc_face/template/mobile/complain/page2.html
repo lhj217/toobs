@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>投诉</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <script src="../addons/hc_face/template/mobile/js/jquery.js"></script>
+    <style type="text/css">
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background: #EFEEF3;
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .title {
+            color: #A9A8AD;
+            font-size: 3.6vw;
+            margin: 3vw 4vw;
+            display: block;
+        }
+
+        .notice {
+            color: #646D95;
+            position: fixed;
+            bottom: 5vw;
+            left: 50%;
+            font-size: 3.8vw;
+            transform: translateX(-50%);
+        }
+
+        .list {
+            width: 94vw;
+            padding: 0 3vw;
+            background: #fff;
+        }
+
+        .item {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3vw 0;
+            font-size: 3.8vw;
+            color: #1E1E1E;
+            border-bottom: 1px solid #F8F8F8;
+        }
+
+        .item:last-child {
+            border-bottom: 0;
+        }
+
+        .item>img {
+            width: 1.6vw;
+            display: block;
+        }
+
+        .second {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .name {
+            color: #0A0A0B;
+            font-size: 5vw;
+            font-weight: bold;
+        }
+
+        .success {
+            width: 26vw;
+            display: block;
+            margin: 10vw;
+        }
+
+        .detail {
+            display: block;
+            font-size: 3.2vw;
+            color: #A2A2A2;
+            padding: 3vw 8vw;
+            text-align: center;
+            line-height: 6vw;
+        }
+
+        .close {
+            width: 94vw;
+            margin: 3vw;
+            height: 10vw;
+            line-height: 10vw;
+            text-align: center;
+            color: #fff;
+            font-size: 3.6vw;
+            border-radius: 4px;
+            background: #1AAD19;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="first">
+            <span class="title">你可以：</span>
+            <div class="list">
+                <div class="item" onclick="submit()">
+                    <span>提交给微信团队审核</span>
+                    <img src="../addons/hc_face/template/mobile/images/my_right.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="secondDiv" hidden>
+            <div class="second">
+                <img class="success" src="../addons/hc_face/template/mobile/images/success_1.png" alt="">
+                <span class="name">投诉已提交</span>
+                <span class="detail">
+                    微信团队会尽快核实，并通过“微信团队”通知你审核结果，感谢你的支持。
+                </span>
+                <div class="close" onclick="window.history.back(-1)">关闭</div>
+            </div>
+        </div>
+        <span class="notice" onclick="window.location.href='{php echo $this->getMobileUrl('complain',array('act'=>page3))}'">投诉须知</span>
+    </div>
+</body>
+<script type="text/javascript">
+    function submit() {
+        
+        $.ajax({
+            type: "GET",
+            url: "{php echo $this->getMobileUrl('complain',array('act'=>submit))}",
+            dataType: "json",
+            success: function(data){
+               $(".first").animate(
+                    { opacity: 0 }, 100, "linear", function () {
+                        $(this).hide()
+                        $(".secondDiv").show()
+                    }
+                )
+            }
+        }); 
+
+
+    }
+
+
+</script>
+
+</html>

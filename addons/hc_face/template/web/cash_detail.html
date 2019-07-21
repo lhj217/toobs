@@ -1,0 +1,43 @@
+{template 'common/header'}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+        待提现明细列表
+        </h3>
+    </div>
+    
+    <div class="panel-body">
+        <div class="table-responsive panel-body">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                <tr>
+                    <th>id</th>
+                    <th>用户名</th>
+                    <th>提现单号</th>
+                    <th>金额</th>
+                    <th>佣金</th>
+                    <th>比例</th>
+                    <th>佣金时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="level-list">
+                {loop $list $item}
+                 <tr>
+                    <td><div class="type-parent">{$item['id']}</div></td>
+                    <td><div class="type-parent"><img src="{$item['avatar']}" width="30" height="30" />{$item['nickname']}</div></td>
+                    <td><div class="type-parent">{$item['trade_no']}</div></td>
+                    <td><div class="type-parent">{$item['price']}</div></td>
+                    <td><div class="type-parent">{$item['profit']}</div></td>
+                    <td><div class="type-parent">{$item['rate']}%</div></td>
+                    <td><div class="type-parent">{php echo date('Y-m-d H:i',$item['createtime'])}</div></td>
+                    <td><a class="btn btn-default btn-sm" href="{php echo $this->createWebUrl('userdo',array('act'=>'commission','uid'=>$item['user_id']))}" title="佣金">佣金</a></td>
+                </tr>
+                {/loop}     
+                </tbody>
+            </table>
+             {$page}   
+        </div>
+    </div>
+</div>
+{template 'common/footer'}

@@ -1,0 +1,169 @@
+{template 'common/header'}
+<style type="text/css">
+    .table>tbody>tr>td{vertical-align: middle; }
+</style>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+        用户列表
+        </h3>
+    </div>
+    
+    <div class="panel-body">
+        <form action="" method="get" class="form-horizontal" role="form">
+            <div class="panel panel-default">
+                <div class="panel-heading">筛选</div>
+                <div class="panel-body">
+                    <input type="hidden" name="c" value="site">
+                    <input type="hidden" name="a" value="entry">
+                    <input type="hidden" name="m" value="hc_face">
+                    <input type="hidden" name="do" value="users">
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">会员等级</label>
+                        <div class="col-xs-12 col-sm-2 col-lg-2">
+                            <select class="form-control" name="level">
+                                <option value="">--请选择--</option>
+                                {loop $fxs $f}
+                                    <option value="{$f['id']}" {if $level==$f['id']}selected="selected"{/if}>{$f['name']}</option>
+                                {/loop}
+                            </select>
+                        </div>
+                        <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">黑名单</label>
+                        <div class="col-xs-12 col-sm-2 col-lg-2">
+                            <select class="form-control" name="black">
+                                <option value="0" {if empty($black)}selected="selected"{/if}>正常</option>
+                                <option value="1" {if $black==1}selected="selected"{/if}>已拉黑</option>
+                            </select>
+                        </div>
+                        <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">会员昵称</label>
+                        <div class="col-xs-12 col-sm-4 col-lg-4">
+                            <input class="form-control" name="keyword" type="text" value="{$keyword}" placeholder="请输入会员昵称">
+                        </div>
+                        <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                    </div>
+                </div>
+            </div><div class="panel panel-default">
+                <div class="panel-body" style="color:red">
+                    1.如果用户在前端“查看更多”内点击本程序自加的“投诉按钮”会自动被拉黑。<br/>
+                    2.如果产生误拉黑，可以筛查出用户，点击“查”移出黑名单。
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>用户总数：<b>{$all}</b></p>
+                    <p>今日用户：<b>{$today}</b></p>
+                </div>
+            </div>
+        </form>
+        <div class="table-responsive panel-body">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                <tr>
+                    <th>id</th>
+                    <th>上级头像</th>
+                    <th>上级用户名</th>
+                    <th>头像</th>
+                    <th>用户名</th>
+                    <th>等级</th>
+                    <th>状态</th>
+                    <th>加入时间</th>
+                    <th style="text-align:right;">操作</th>
+                </tr>
+                </thead>
+                <tbody id="level-list">
+                {loop $users $item}
+                 <tr>
+                     <td><div class="type-parent">{$item['uid']}</div></td>
+                     <td>
+                        <div class="type-parent">
+                            <img src="{$item['parent']['avatar']}" style="width:40px;height:40px"/>
+                        </div>
+                     </td>
+                     <td>
+                        {if !empty($item['pid'])}
+                        <div class="type-parent">
+                            {$item['parent']['nickname']}
+                            <br/>
+                            <mark>{$item['parent']['openid']}</mark>
+                        </div>
+                        {else}平台
+                        {/if}
+                     </td>
+                     <td><div class="type-parent"><img src="{$item['avatar']}" style="width:40px;height:40px"/></div></td>
+                     <td>
+                        <div class="type-parent">
+                            {$item['nickname']}
+                            <br/>
+                            <mark>{$item['openid']}</mark>
+                        </div>
+                     </td>
+                     <td><div class="type-parent">{$fx[$item['level']]}</div></td>
+                     <td>
+                        <div class="type-parent">
+                            {if $item['black']==1}
+                                <span class="label label-danger">已拉黑</span>
+                            {else}
+                                <span class="label label-success">正常</span>
+                            {/if}
+                        </div>
+                     </td>
+                     <td><div class="type-parent">{php echo date('Y-m-d H:i',$item['createtime'])}</div></td>
+                     <td style="text-align:right;">
+                        <button class="btn btn-default btn-sm getmobile" data-uid="{$item['uid']}">手机号</button>
+                        <a class="btn btn-default btn-sm" href="{php echo $this->createWebUrl('userdo',array('act'=>'team','nick'=>$item['nickname'],'uid'=>$item['uid'],'l'=>$level,'k'=>$keyword,'p'=>$pageindex))}" title="团队">团队</a>
+                        <a class="btn btn-default btn-sm" href="{php echo $this->createWebUrl('userdo',array('act'=>'commission','uid'=>$item['uid']))}" title="佣金">佣金</a>
+                         <a class="btn btn-default btn-sm" href="{php echo $this->createWebUrl('userdo',array('act'=>'edit','uid'=>$item['uid']))}" title="详情">查</a>
+                         <a class="btn btn-default btn-sm" href="{php echo $this->createWebUrl('userdo',array('act'=>'del','uid'=>$item['uid']))}" onclick="return confirm('确认删除此用户吗？');return false;" title="删除">删</a>
+                     </td>
+                </tr>
+                {/loop}     
+                </tbody>
+            </table>
+             {$page}   
+        </div>
+    </div>
+</div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">手机号列表</h4>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<script type="text/javascript">
+    $(".getmobile").click(function(){
+        var uid = $(this).attr('data-uid');
+        $.ajax({
+            type: "GET",
+            url: "{php echo $this->createWebUrl('userdo',array('act'=>'mobile'))}",
+            data: {uid:uid},
+            dataType: "json",
+            success: function (data) {
+                $('#myModal').modal('show')
+                var html = ''
+                $.each(data,function(i,t){
+                    html += '<p>'+t+'</p>'
+                })
+
+
+                $('.modal-body').html(html);
+            }
+        });
+    })
+
+</script>
+{template 'common/footer'}

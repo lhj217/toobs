@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="https://shop527897120.taobao.com" versionCode="0.6,0.8,1.0">
+	<application setting="false">
+		<name><![CDATA[AI面相]]></name>
+		<identifie><![CDATA[hc_face]]></identifie>
+		<version><![CDATA[3.1.9]]></version>
+		<type><![CDATA[biz]]></type>
+		<ability><![CDATA[AI面相]]></ability>
+		<description><![CDATA[AI面相]]></description>
+		<author><![CDATA[新快科技 算术阀联系客服qq509778577]]></author>
+		<url><![CDATA[https://shop527897120.taobao.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="qr"/>
+			<message type="subscribe"/>
+		</subscribes>
+		<handles>
+			<message type="qr"/>
+			<message type="subscribe"/>
+		</handles>
+		<rule embed="false"/>
+		<card embed="false"/>
+		<supports><item type="app"/></supports>
+	   
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="代理入口" do="distribution" state="2" direct="false"/>
+			<entry title="首页" do="index" state="1" direct="false"/>
+			<entry title="面相报告链接" do="follow" state="3" direct="false"/>
+			<entry title="手相报告链接" do="follow2" state="4" direct="false"/>
+		</cover>
+		<menu>
+			<entry title="升级记录" do="upgrade" state="7" direct="false"/>
+			<entry title="基础设置" do="set" state="1" direct="false"/>
+			<entry title="用户管理" do="users" state="2" direct="false"/>
+			<entry title="购买管理" do="goods" state="3" direct="false"/>
+			<entry title="解锁管理" do="order" state="4" direct="false"/>
+			<entry title="提现管理" do="cash" state="5" direct="false"/>
+			<entry title="轮播图管理" do="banner" state="6" direct="false"/>
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[m_install.php]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_hcface_avatar`;
+DROP TABLE IF EXISTS `ims_hcface_banner`;
+DROP TABLE IF EXISTS `ims_hcface_cash`;
+DROP TABLE IF EXISTS `ims_hcface_commission`;
+DROP TABLE IF EXISTS `ims_hcface_goods`;
+DROP TABLE IF EXISTS `ims_hcface_hand_report`;
+DROP TABLE IF EXISTS `ims_hcface_nexus`;
+DROP TABLE IF EXISTS `ims_hcface_order`;
+DROP TABLE IF EXISTS `ims_hcface_order_unlock`;
+DROP TABLE IF EXISTS `ims_hcface_paylog`;
+DROP TABLE IF EXISTS `ims_hcface_report`;
+DROP TABLE IF EXISTS `ims_hcface_setting`;
+DROP TABLE IF EXISTS `ims_hcface_upgrade`;
+DROP TABLE IF EXISTS `ims_hcface_users`;
+]]></uninstall>
+	<upgrade><![CDATA[m_upgrade.php]]></upgrade>
+</manifest>

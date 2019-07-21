@@ -1,0 +1,90 @@
+{template 'common/header'}
+<style type="text/css">
+    .table>tbody>tr>td{vertical-align: middle; }
+</style>
+<div class="clearfix">
+<ul class="nav nav-tabs">
+    <li class="active"><a href="{php echo $this->createWebUrl('goods')}">报告列表</a></li>
+</ul>
+<div class="clearfixcon">
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="table-responsive panel-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="all"></th>
+                        <th>报告名称</th>
+                        <th>原价</th>
+                        <th>需支付</th>
+                        <th>优惠券</th>
+                        <th>销量</th>
+                        <th style="text-align:center;">操作</th>
+                    </tr>
+                </thead>
+                <tbody  class="che">
+                    {loop $list $index $item}
+                    <tr>
+                        <td><input type="checkbox" value="{$item['id']}"></td>
+                        <td class="text-left">{$item['title']}</td>
+                        <td class="text-left">{$item['oprice']}</td>
+                        <td class="text-left">{$item['price']}</td>
+                        <td class="text-left">{$item['discount']}</td>
+                        <td class="text-left">{$item['sales']}</td>
+                        <td class="text-center">
+							<a href="{php echo $this->createWebUrl('goods_post',array('id'=>$item['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="详情"><i class="fa fa-edit"></i></a>
+						</td>
+                    </tr>
+                    {/loop}
+                </tbody>
+            </table>
+            {$page}
+            {if empty($list)}
+            <div style="margin-top: 20px;    margin-left: -16px;">
+                <a class="btn btn-danger" href="{php echo $this->createWebUrl('Goods_post',array('act'=>'init'))}" onclick="return confirm('确认加载初始数据吗？');return false;" title="初始化">加载初始数据</a>
+            </div>
+            {elseif count($list)==3}
+            <div style="margin-top: 20px;    margin-left: -16px;">
+                <a class="btn btn-danger" href="{php echo $this->createWebUrl('Goods_post',array('act'=>'init1'))}" onclick="return confirm('确认加载初始数据吗？');return false;" title="初始化">加载手相初始数据</a>
+            </div>
+            {/if}
+        </div>
+    </div>
+</div>
+{template 'common/footer'}
+
+<script type="text/javascript">
+  
+$(function () {
+    //全选或全不选
+    $("#all").click(function(){   
+        if(this.checked){   
+            $(":checkbox").prop("checked", true);  
+        }else{   
+            $(":checkbox").prop("checked", false);
+        }   
+    }); 
+    
+    //获取选中选项的值
+    $("#submit").click(function(){
+        var val = '';
+        $(".che :checkbox").each(function(i){
+            if($(this).is(":checked")){
+                val += $(this).val() + ",";
+            }
+        });
+        $.ajax({
+            url:"{php echo $this->createWebUrl('Goods_post',array('act'=>moredel));php}",
+            data:{ids:val},
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                alert('删除成功');
+                location.reload();
+            }
+        });
+    });
+    
+});
+
+</script>

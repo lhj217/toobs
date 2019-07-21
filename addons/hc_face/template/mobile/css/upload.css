@@ -1,0 +1,361 @@
+html,body,p{
+	margin:0 auto;
+	padding:0 auto;
+	position:relative;
+}
+.container{
+	background:url(../images/upload_bg.png) no-repeat;
+	background-size:100% 100%;
+	position:fixed;
+	width: 100vw;
+	height:100vh;
+	color:#fff;
+	top:0;
+	overflow-y: scroll;
+}
+.upPic{
+	font-size:6vw;
+	padding:3vw 6vw 0;
+}
+.upPic_notice{
+	font-size:3.3vw;
+	padding:1vw 6vw 0;
+}
+.photo{
+	width:100vw;
+	height:56vw;
+	margin:0 auto;
+	padding:4vw 0;    
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	position:relative;
+}
+.photo>img{
+	width:44vw;
+	height:44vw;
+	border-radius: 16px;
+}
+.notice{
+	text-align: center;
+	font-size:3.3vw;
+	margin: 0 0 5vw;
+}
+.notice_content{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	flex-wrap:wrap;
+}
+.item{
+	background:#25165C;
+	margin:0 5px 10px 5px;
+	font-size: 3.3vw;
+	padding:8px 16px;
+	border-radius: 10px;
+	border:1px dashed rgba(255,255,255,.5);
+	box-shadow:inset 0px 0px 10px #000;
+}
+.upLoadPic{
+	opacity: 1;
+}
+.upload_photo{
+	background:url(../images/btn.png) no-repeat;
+	background-size:100% 100%;
+	width:76vw;
+	height:13.4vw;
+	margin:0 auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	font-size:4vw;
+	margin-top:6vw;
+}
+.upload_photo>img{
+	width:6vw;
+	display: block;
+	margin-right:8px;
+}
+.result{
+	width:90vw;
+	margin:0 auto;
+	height:51.7vw;
+	background:url(../images/result.png) no-repeat;
+	background-size:100% 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.reUpload{
+	font-size:4vw;
+	text-align: center;
+	opacity: 0.6;
+	padding-top:6px;
+}
+.result_list{
+	width:68vw;
+	font-size:3.5vw;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+.result_list>span{
+	margin:3vw 0 ;
+}
+.result_list>span:nth-child(2){
+	background:#5D2AC8;
+	height:7vw;
+	line-height: 7vw;
+	text-align: center;
+	border-radius: 3.5vw;
+	width:40vw;
+}
+.result_list>img{
+	box-shadow: 0 0 10px #fff;
+	width:6vw;
+	height:6vw;
+	text-align: center;
+	line-height: 6vw;
+	border-radius: 50%;
+}
+
+/*扫描过程*/
+
+.submitPic{
+	opacity: 0;
+	display: none;
+}
+.scan{
+	display: none;
+}
+.scan{
+	background:url(../images/scan.png) no-repeat;
+	background-size:100% 100%;
+	width:90vw;
+	height:120.5vw;
+	margin:-32vw auto 0;
+	overflow: hidden;
+}
+#myCanvas{
+	position:absolute;
+	top:0;
+	left:0;
+	margin:0 auto;
+	padding:8vw 0;
+}
+#myPic{
+	position:relative;
+	border:2px solid #3C1D8B;
+	overflow: initial;
+	/*box-shadow: 0 0 90px rgba(255,255,255,0.8);*/
+}
+.light{
+	position:absolute;
+	top:50%;
+	left:50%;
+	width:36vw;
+	height:36vw;
+	transform: translate(-50%,-50%);
+	background:url() no-repeat;
+	background-size:100% 100%;
+	border-radius: 18vw;
+	display: none;
+	box-shadow: 0 0 60px rgba(255,255,255,0.6);
+}
+.line{
+	display: none;
+	width:42vw;
+	height:2px;
+	background:#fff;
+	position:absolute;
+	top:10vw;
+	opacity: 0;
+	box-shadow: 0 0 20px rgba(60,29,139,1);
+	animation: myfirst 2s linear 0.2s infinite alternate;
+}
+@keyframes myfirst{
+	0%{
+		top:10vw;
+		opacity: 1;
+	}
+	25%{
+		top:19vw;
+		opacity: 1;
+	}
+	50%{
+		top:28vw;
+		opacity: 1;
+	}
+	75%{
+		top:37vw;
+		opacity: 1;
+	}
+	100%{
+		top:46vw;
+		opacity: 1;
+	}
+}
+.tabList{
+	padding-top:40vw;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width:70vw;
+	margin:0 auto;
+	font-size:14px;
+}
+/*tab导航*/
+.tabItem{
+	padding:6px 0;
+	border-bottom:2px solid rgba(255,255,255,.6);
+}
+.selTab{
+	border-bottom:2px solid rgba(255,255,255,1);
+}
+.tabDiv{
+	width: 70vw;
+	padding: 0 10vw;
+}
+.tabDiv_content{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin:4vw 0;
+	height:12vw;
+	padding:0 16px;
+	font-size:12px;
+	border-radius: 6px;
+	background:rgba(94,44,202,0.6);
+	justify-content: space-between;
+}
+.tabDiv_content img:nth-child(2){
+	width:6vw;
+	height:6vw;
+	animation: circles 2s linear 2s infinite normal;
+}
+@keyframes circles{ 
+from{ 
+	transform:rotate(360deg); 
+	-webkit-transform:rotate(360deg); 
+	}to{ 
+		transform:rotate(0deg); 
+		-webkit-transform:rotate(0deg);
+	}
+}
+
+/*获取报告时候的样式*/
+.tabDiv_content img:nth-child(3){
+	width:6vw;
+	height:6vw;
+	display: none;
+}
+.tabDivList{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	flex-wrap: nowrap;
+	width:300vw;
+}
+.getResult{
+	display: none;
+	color:#fff;
+	z-index:999;
+	opacity: 0;
+}
+.column{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.resultimg{
+	width:16vw;
+	height:16vw;
+	border-radius: 8vw;
+	margin:10px 0;
+	box-shadow: 0 0 50px rgba(255,255,255,0.6);
+}
+.Rnotice{
+	font-size:6vw;
+}
+.name_notice{
+	font-size:3.2vw;
+	margin:10vw 0 3vw;
+}
+input{
+	outline:none;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+	color: #fff;
+	text-align: center;
+	font-size:3.6vw;    
+	border-bottom: 1px solid rgba(255,255,255,.6);
+	width:46vw;
+	margin: 0 auto;
+	padding:10px 0;
+}
+
+/*上传照片符合规则么*/
+.uploadNotice{
+	display: none;
+	position: fixed;
+	top:0;
+	width:100vw;
+	height:100vh;
+	background:rgba(0,0,0,0.6);
+	z-index:999;
+}
+.uploadContent{
+	display: none;
+	width:90vw;
+	padding:0 5vw;
+	background:#fff;
+	position:fixed;
+	bottom:-250px;
+	height:250px;
+	color:#3D3D3D;
+	z-index:1000;
+	/*animation: up 1s linear 1s;
+	animation-fill-mode:forwards;*/
+}
+.titles{
+	font-size:4.3vw;
+	margin:10vw 0 3vw;
+}
+.msg{
+	font-size:3.8vw;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.msg>span:nth-child(1){
+	width:3vw;
+	height:3vw;
+	border-radius: 3vw;
+	display: block;
+	box-sizing: border-box;
+	border:2px solid #3D3D3D;
+	margin-right:10px;
+}
+.re_Upload{
+	color:#fff;
+	font-size:4vw;
+	background:#25165C;
+	width:66vw;
+	height:10vw;
+	line-height: 10vw;
+	text-align: center;
+	border-radius: 6px ;
+	margin:5vw auto 10vw;
+	position: absolute;
+	bottom: 0;
+	left:50%;
+	transform: translateX(-50%);
+}

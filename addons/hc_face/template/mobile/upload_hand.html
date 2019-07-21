@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<script src="../addons/hc_face/template/mobile/js/jquery.js?{$_W['timestamp']}"></script>
+	<script type="text/javascript"
+		src="../addons/hc_face/template/mobile/js/jweixin-1.4.0.js?{$_W['timestamp']}"></script>
+	<link rel="stylesheet" type="text/css"
+		href="../addons/hc_face/template/mobile/css/upload_hand.css?{$_W['timestamp']}">
+	<script src="../addons/hc_face/template/mobile/js/layer/layer.js"></script>
+	<script src="../addons/hc_face/template/mobile/js/exif.js"></script>
+	{template 'common/share'}
+	<title>生成手相报告</title>
+	<style type="text/css">
+		.number {
+			width: 59vw;
+			padding: 10px 3vw;
+			border-bottom: 1px solid rgba(255, 255, 255, .6);
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.getNum {
+			background: #0035A8;
+			border-radius: 6px;
+			width: 16vw;
+			height: 7vw;
+			line-height: 7vw;
+			font-size: 3.6vw;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			color: #fff;
+			border: 0;
+			outline: none;
+		}
+	</style>
+	{template 'common/share'}
+	<script type="text/javascript">
+
+		//调用微信JS api 支付
+
+		function callpay() {
+			var paytype = '{$pay['paytype']}';
+			var type = 'hd';
+			var rid = $('#rid').val();
+			var name = $("#username").val();
+			if (typeof name == "undefined" || name == '' || name == null) {
+				layer.msg('请输入您的姓名');
+				return false;
+			}
+			var number = $("#number").val();
+			var tel = '{$lock[tel]}';
+			if (tel == 1) {
+				if (typeof number == "undefined" || number == '' || number == null) {
+					layer.msg('请输入您的手机号');
+					return false;
+				}
+				var code = $("#code").val();
+				var st =0;
+				$.ajax({
+					type: "GET",
+					url: "{php echo $this->getMobileUrl('msg')}",
+					data: {act:'check',mobile:number,code:code},
+					async:false,
+					dataType: "json",
+					success: function (data) {
+						if(data.code==0){
+							layer.msg(data.msg)
+							st = 1
+						}
+					}
+				});
+				if(st==1){
+					return false
+				}
+			}
+
+			var ua = window.navigator.userAgent.toLowerCase();
+
+			if (paytype != 1 && ua.match(/MicroMessenger/i) == 'micromessenger') {
+
+				if (typeof WeixinJSBridge == "undefined") {
+
+					if (document.addEventListener) {
+
+						document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+
+					} else if (document.attachEvent) {
+
+						document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+
+						document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+
+					}
+
+				} else {
+
+					$.ajax({
+
+						type: "GET",
+
+						url: "{php echo $this->createMobileUrl('pay')}",
+
+						data: { type: type, rid: rid, name: name , number: number},
+
+						dataType: "json",
+
+						success: function (data) {
+
+							var jsApiParameters = data;
+							console.log(jsApiParameters);
+							WeixinJSBridge.invoke(
+
+								'getBrandWCPayRequest',
+
+								jsApiParameters,
+
+								function (res) {
+									WeixinJSBridge.log(res.err_msg);
+									if (res.err_msg == "get_brand_wcpay_request:ok") {
+										window.location.href = "./index.php?i={$_W[uniacid]}&c=entry&do=report_hand&rid=" + rid + "&m=hc_face"
+									}
+								}
+
+							);
+
+						}
+
+					});
+
+				}
+
+			} else {
+				$.ajax({
+
+					type: "GET",
+
+					url: "{php echo $this->createMobileUrl('pay')}",
+
+					data: { type: type, rid: rid, name: name , number: number},
+
+					dataType: "json",
+
+					success: function (data) {
+						if (data.code == 1) {
+
+							window.location.href = data.url;
+
+						}
+					}
+				});
+			}
+
+		}
+	</script>
+</head>
+
+<body>
+	<!----------------------------上传照片符合规定么------------------>
+	<div class="uploadNotice"></div>
+	<div class="uploadContent">
+		<div class="titles">您的照片未符合以下标准</div>
+		<div class="msg">
+			<span></span>
+			<span class="bug"></span>
+		</div>
+		<div class="PC_upload">
+			<form class="uploadForm" enctype="multipart/form-data">
+				<div class="re_Upload">
+					<input type="file" id="file" class="file-btn" name="image">重新上传</input>
+				</div>
+			</form>
+		</div>
+		<div class="WX_upload">
+			<div class="re_Upload" onclick="uploadPhoto()">重新上传</div>
+		</div>
+	</div>
+	<div class="container">
+		<!----------------- 开始上传图片 ------------------->
+		<div class="upLoadPic" id="upLoadPic1">
+			<p class="upPic">拍照/上传</p>
+			<p class="upPic_notice">您可以选择打开相册或直接拍照</p>
+		</div>
+		<div class="photo">
+			<div class="light"></div>
+			<img id="myPic" src="../addons/hc_face/template/mobile/images/hand_pic.png">
+			<!-- <canvas id="myCanvas" width="" height=""></canvas> -->
+			<div class="line"></div>
+		</div>
+		<!----------------- 开始扫描结果 ------------------->
+		<div class="scan">
+			<div class="scan_list column">
+				<div class="scan_item row">
+					<span>指相分析</span>
+					<div class="hand_progress">
+						<div class="progress_item"></div>
+						<div class="hand_cricle">
+							<img class="hand_icon0" src="../addons/hc_face/template/mobile/images/hand_load1.png">
+							<img class="hand_success0" style="display: none;"
+								src="../addons/hc_face/template/mobile/images/hand_success.png">
+						</div>
+					</div>
+				</div>
+				<div class="scan_item row">
+					<span>掌纹分析</span>
+					<div class="hand_progress">
+						<div class="progress_item"></div>
+						<div class="hand_cricle">
+							<img class="hand_icon1" src="../addons/hc_face/template/mobile/images/hand_load1.png">
+							<img class="hand_success1" style="display: none;"
+								src="../addons/hc_face/template/mobile/images/hand_success.png">
+						</div>
+					</div>
+				</div>
+				<div class="scan_item row">
+					<span>AI智能解码</span>
+					<div class="hand_progress">
+						<div class="progress_item"></div>
+						<div class="hand_cricle">
+							<img class="hand_icon2" src="../addons/hc_face/template/mobile/images/hand_load1.png">
+							<img class="hand_success2" style="display: none;"
+								src="../addons/hc_face/template/mobile/images/hand_success.png">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 上传图片 -->
+		<div class="upLoadPic" id="upLoadPics">
+			<p class="notice">满足以下要求结果更准确</p>
+			<div class="notice_content">
+				<img class="notice_icon" style="width:15vw;"
+					src="../addons/hc_face/template/mobile/images/notice_icon1.png">
+				<img class="notice_icon" style="width:24.5vw;"
+					src="../addons/hc_face/template/mobile/images/notice_icon2.png">
+				<img class="notice_icon" style="width:24.5vw;"
+					src="../addons/hc_face/template/mobile/images/notice_icon3.png">
+			</div>
+			<div class="notice_content">
+				<img class="notice_icon" class="notice_icon" style="width:24.5vw;"
+					src="../addons/hc_face/template/mobile/images/notice_icon4.png">
+				<img class="notice_icon" style="width:21.6vw;"
+					src="../addons/hc_face/template/mobile/images/notice_icon5.png">
+			</div>
+			<div id="UPload">
+				<div class="PC_upload">
+					<form class="uploadForm" enctype="multipart/form-data">
+						<div class="upload_photo">
+							<input type="file" id="file" class="file-btn" name="image">
+							<img src="../addons/hc_face/template/mobile/images/camera.png">
+							<span>拍照/上传美图</span>
+							</input>
+						</div>
+					</form>
+				</div>
+				<div class="WX_upload">
+					<div class="upload_photo" onclick="uploadPhoto()">
+						<img src="../addons/hc_face/template/mobile/images/camera.png">
+						<span>拍照/上传美图</span>
+					</div>
+				</div>
+			</div>
+			<div id="UP_success" style="display: none;">
+				<div class="upload_photo" onclick="submit()">
+					<input type="hidden" id="aid" value="">
+					<span>确认提交</span>
+				</div>
+			</div>
+		</div>
+		<!-- 领取结果 -->
+		<div class="getResult">
+			<div class="column">
+				<img class="resultimg" src="../addons/hc_face/template/mobile/images/report_icon1.png">
+				<span class="Rnotice">报告已生成!</span>
+				<span class="name_notice">请输入姓名领取报告</span>
+				<input type="hidden" id="rid" value="">
+				<input class="inputName" type="text" placeholder="例：张三" id="username">
+				{if $lock['tel']==1}
+				<div class="between number">
+					<input class="inputName" name="mobile" type="number" placeholder="输入手机号获取验证码" id="number"
+						style="border:0;text-align: left;width:40vw;">
+					<button class='getNum'>获取</button>
+				</div>
+				<div class="between number">
+					<input class="inputName" type="number" placeholder="输入验证码" id="code"
+						style="border:0;text-align: left;width:56vw;">
+				</div>
+				{/if}
+				{if $wxapp==1}
+				<div class="upload_photo" onclick="subscribe()" style="font-size:4vw;">关注公众号免费领取报告</div>
+				{else}
+				{if $num>=$pay['free_num']}
+				<div class="upload_photo" onclick="pay()" style="font-size:4vw;" >支付{$pay['hand_money']}元领取报告</div>
+				{else}
+				<div class="upload_photo" onclick="getreport()" style="font-size:4vw;" >免费领取报告</div>
+				{/if}
+				{/if}
+			</div>
+		</div>
+		<!-- ----------------------------关注公众号领取报告------------------------------ -->
+		<div class="shadow" onclick="closeWxchat()"></div>
+		<div class="focus_wechat">
+			<div class="column">
+				<img class="wechat_img" src="{$lock['qrcode']}">
+				<span class="wechat_notice">关注公众号后回复关键词"<text
+						style="color:red;font-size:4.3vw;">{$lock['reply1']}</text>"领取</span>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="../addons/hc_face/template/mobile/js/hand_upload.js?{$_W['timestamp']}"></script>
+<script type="text/javascript">
+
+	$(".getNum").click(function (val) {
+		var mobile = $("#number").val()
+		var that = this
+		$.ajax({
+			type: "POST",
+			url: "{php echo $this->getMobileUrl('msg')}",
+			data: { mobile: mobile },
+			dataType: "json",
+			success: function (data) {
+				layer.msg(data.msg);
+				if (mobile != '' && mobile != undefined) {
+					clearInterval(window.timer)
+					countdown = 60
+					$(".getNum").html("获取")
+					$(".getNum").attr("disabled", true)
+					settime(that)
+				}
+			}
+		});
+	})
+	function settime(val) {
+		clearInterval(window.timer)
+		if (countdown == 0) {
+			clearInterval(val.timer)
+			$(".getNum").html("获取")
+			$(".getNum").attr("disabled", false)
+			countdown = 60
+		} else {
+			$(".getNum").html(countdown);
+			window.timer = setInterval(function () {
+				countdown--
+				settime(val)
+			}, 1000)
+		}
+	}
+
+	var ua = navigator.userAgent.toLowerCase();
+	var isWeixin = ua.indexOf('micromessenger') != -1;
+	if (!isWeixin) {
+		// alert('Dragondean说这不是通过微信内置浏览器');
+		$(".PC_upload").show()
+	} else {
+		// alert('微信内置浏览器');
+		$(".WX_upload").show()
+	}
+	// -------关闭图片判断页面--------//
+	$(".uploadNotice").click(function () {
+		$(".uploadContent").animate({
+			"bottom": -250 + "px"
+		}, 400, "linear",
+			function () {
+				$(".uploadNotice").hide()
+			})
+	})
+
+
+	function uploadPhoto() {
+		$(".uploadNotice,.uploadContent").hide()
+		wx.chooseImage({
+			count: 1,
+			sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+			sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+			success: function (res) {
+				var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+				uploadImg(localIds[0]);
+			}
+		});
+	};
+	//具体上传图片
+	function uploadImg(e) {
+		wx.uploadImage({
+			localId: e, // 需要上传的图片的本地ID，由chooseImage接口获得
+			isShowProgressTips: 1, // 默认为1，显示进度提示
+			success: function (res) {
+				serverId = res.serverId;
+				$.ajax({
+					url: "{php echo $this->createMobileUrl('hand',array('method'=>'upload','plat'=>'wx'))}",
+					dataType: "json",
+					async: false,
+					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+					data: { "mediaId": serverId },
+					type: "POST",
+					timeout: 30000,
+					success: function (res, textStatus) {
+						if (res.code == 0) {
+							// ---------------------------上传照片符合规定么------------------//
+							$(".bug").html(res.msg)
+							$(".uploadContent,.uploadNotice").show()
+							$(".uploadContent").animate({
+								"bottom": 0 + "px"
+							}, 400, "linear",
+								function () {
+								})
+							// ---------------------------上传照片符合规定么------------------//
+						}
+						$("#myPic").attr("src", res.data.image)
+						$("#aid").val(res.data.aid);
+						$("#UPload").hide()
+						$("#UP_success").show()
+					}
+				});
+			}
+		});
+	}
+	// PC端提交图片
+	$(".file-btn").on("change", function () {
+		$(".uploadContent,.uploadNotice").hide()
+		var file = $(this)[0].files[0];
+		var fileReader = new FileReader();
+		var that = this;
+		fileReader.onloadend = function () {
+			if (fileReader.readyState == fileReader.DONE) {
+				var path = fileReader.result
+				$.ajax({
+					url: "{php echo $this->createMobileUrl('hand',array('method'=>'upload'))}",
+					type: 'POST',
+					cache: false,
+					data: new FormData($(that).parents(".uploadForm")[0]),
+					processData: false,
+					contentType: false
+				}).done(function (res) {
+					var res = JSON.parse(res)
+					if (res.code == 0) {
+						// ---------------------------上传照片符合规定么------------------//
+						$(".bug").html(res.msg)
+						$(".uploadContent,.uploadNotice").show()
+						$(".uploadContent").animate({
+							"bottom": 0 + "px"
+						}, 400, "linear",
+							function () {
+							})
+						// ---------------------------上传照片符合规定么------------------//
+					}
+					$("#aid").val(res.data.aid);
+					$("#myPic").attr("src", res.data.image);
+					$("#UPload").hide()
+					$("#UP_success").show()
+
+				}).fail(function (res) {
+					console.log(res)
+				});
+			}
+		};
+		fileReader.readAsDataURL(file);
+	})
+
+
+	// 识别效果展示
+	var scan_list = $(".progress_item"), i = 0;
+	function progress(i) {
+		$(scan_list[i]).animate({
+			"width": "42vw",
+		}, 3000, "linear",
+			function () {
+				$(".hand_icon" + i).hide()
+				$(".hand_success" + i).show()
+				i++;
+				if (i < 3) {
+					progress(i)
+				} else {
+					$(".scan,.line").animate({ "opacity": 0 }, 400, "linear", function () { $(".scan,.line,#upLoadPic1").hide() })
+					$(".light").animate({ "width": "50vw", "height": "50vw" }, 400, "linear", function () {
+						$(".light").css("animation", "none")
+					})
+					$("#myPic").animate({ "width": "30vw", "height": "30vw" }, 400, "linear", function () { })
+					$(".getResult").animate({ "opacity": 1 }, 400, "linear", function () { $(".getResult").show() })
+				}
+			})
+	}
+	// 确认提交
+	function submit() {
+		$("#upLoadPic1,#upLoadPics").animate({ "opacity": 0 }, 300, "linear", function () { $("#upLoadPics").hide(); })
+
+		$(".photo").css("padding", 0)
+		var face_token = $(".face_token").val()
+		var imgurl = $("#myPic").attr("src")
+		$("#myPic").attr("src", imgurl)
+		var img = new Image()
+		img.src = imgurl;
+		$("#myPic").animate(
+			{ width: "36vw", height: "36vw", margin: "0 auto", borderRadius: '18vw' }, 300, "linear", function () {
+				$(".scan").animate({ "opacity": 1 }, 100, "linear", function () {
+					$(".scan,.line,.light").show();
+					progress(i)
+				})
+			}
+		)
+		$.ajax({
+			type: "POST",
+			url: "{php echo $this->createMobileUrl('hand',array('method'=>'submit'))}",
+			data: { aid: $("#aid").val() },
+			dataType: "JSON",
+			success: function (res) {
+				$("#rid").val(res.data.rid);
+			}
+		});
+	}
+	// 支付领取报告
+	function pay() {
+		if (!isWeixin) {
+			// alert('这不是通过微信内置浏览器');
+			var rid = $("#rid").val();
+			var name = $("#username").val();
+			if (typeof name == "undefined" || name == '' || name == null) {
+				layer.msg('请输入您的姓名');
+				return false;
+			}
+			var number = $("#number").val();
+			var tel = '{$lock[tel]}';
+			if (tel == 1) {
+				if (typeof number == "undefined" || number == '' || number == null) {
+					layer.msg('请输入您的手机号');
+					return false;
+				}
+				var code = $("#code").val();
+				var st =0;
+				$.ajax({
+					type: "GET",
+					url: "{php echo $this->getMobileUrl('msg')}",
+					data: {act:'check',mobile:number,code:code},
+					async:false,
+					dataType: "json",
+					success: function (data) {
+						if(data.code==0){
+							layer.msg(data.msg)
+							st = 1
+						}
+					}
+				});
+				if(st==1){
+					return false
+				}
+			}
+			window.location.href = "{php echo $this->createMobileUrl('wappay')}" + '&type=hd&rid=' + rid + '&name=' + name + '&number=' + number
+		} else {
+			// alert('微信内置浏览器');
+			callpay()
+		}
+	}
+	function getreport() {
+		var rid = $("#rid").val();
+		var name = $("#username").val();
+		if (typeof name == "undefined" || name == '' || name == null) {
+			layer.msg('请输入您的姓名');
+			return false;
+		}
+		var number = $("#number").val();
+		var tel = '{$lock[tel]}';
+		if (tel == 1) {
+			if (typeof number == "undefined" || number == '' || number == null) {
+				layer.msg('请输入您的手机号');
+				return false;
+			}
+			var code = $("#code").val();
+			var st =0;
+			$.ajax({
+				type: "GET",
+				url: "{php echo $this->getMobileUrl('msg')}",
+				data: {act:'check',mobile:number,code:code},
+				async:false,
+				dataType: "json",
+				success: function (data) {
+					if(data.code==0){
+						layer.msg(data.msg)
+						st = 1
+					}
+				}
+			});
+			if(st==1){
+				return false
+			}
+		}
+		$.ajax({
+			type: "POST",
+			url: "{php echo $this->createMobileUrl('hand',array('method'=>'report'))}",
+			data: { rid: rid, name: name , number: number},
+			dataType: "json",
+			success: function (res) {
+				window.location.href = "./index.php?i={$_W[uniacid]}&c=entry&do=report_hand&rid=" + rid + "&m=hc_face"
+			}
+		});
+	}
+	// 关注公众号
+	function subscribe() {
+		var rid = $("#rid").val();
+		var name = $("#username").val();
+		if (typeof name == "undefined" || name == '' || name == null) {
+			layer.msg('请输入您的姓名');
+			return false;
+		}
+		var number = $("#number").val();
+		var tel = '{$lock[tel]}';
+		if (tel == 1) {
+			if (typeof number == "undefined" || number == '' || number == null) {
+				layer.msg('请输入您的手机号');
+				return false;
+			}
+			var code = $("#code").val();
+			var st =0;
+			$.ajax({
+				type: "GET",
+				url: "{php echo $this->getMobileUrl('msg')}",
+				data: {act:'check',mobile:number,code:code},
+				async:false,
+				dataType: "json",
+				success: function (data) {
+					if(data.code==0){
+						layer.msg(data.msg)
+						st = 1
+					}
+				}
+			});
+			if(st==1){
+				return false
+			}
+		}
+		$(".shadow,.focus_wechat").show();
+		$.ajax({
+			type: "POST",
+			url: "{php echo $this->createMobileUrl('hand',array('method'=>'follow'))}",
+			data: { rid: rid, name: name , number: number},
+			dataType: "json",
+			success: function (res) {
+
+			}
+		});
+	}
+
+	function closeWxchat() {
+		$(".shadow,.focus_wechat").hide();
+	}
+</script>
+
+</html>

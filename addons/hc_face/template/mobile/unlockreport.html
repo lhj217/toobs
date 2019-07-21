@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<script src="../addons/hc_face/template/mobile/js/jquery.js"></script>
+	<script src="../addons/hc_face/template/mobile/js/jquery.bxslider.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../addons/hc_face/template/mobile/css/unlockreport.css?{$_W['timestamp']}">
+	<title>{$res['name']}的{$title}</title>
+	<style type="text/css">
+		.fuck{
+			width:90vw;
+			margin:5vw auto;
+			display: block;
+		}
+	</style>
+<!-- 	<script type="text/javascript">
+		var con = "{$res['content']}";
+		if(con.length<=0){
+			window.location.reload();
+		}
+	</script> -->
+</head>
+<body>
+	<div class="container">
+		<div class="result" style="margin-top:10vw;">
+			<div class="content_title">{$res['name']}的{$title}</div>
+			<span class="content">{$res['content']}</span>
+		</div>
+		<img class="fuck" onclick="window.location.href='{php echo $this->createMobileUrl('distribution')}'" src="../addons/hc_face/template/mobile/images/fuck.png">
+		<!-- <div class="detail"></div> -->
+		<!-- <div class="suggest">
+			<div class="title">择业建议</div>
+			<div class="content">公职人员、金融、管理</div>
+		</div>
+		<div class="notice">
+			<p>事业变动年纪</p>
+			<p>30岁</p>
+		</div> -->
+	</div>
+</body>
+</html>

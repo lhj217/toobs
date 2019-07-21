@@ -1,0 +1,92 @@
+{template 'common/header'}
+<style type="text/css">
+	.help-block{
+		color: red !important;
+	}
+</style>
+<div class="clearfix">
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('goods')}">报告列表</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('goods_post')}">编辑报告</a></li>
+</ul>
+<div class="clearfix">
+		<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form2">
+			<div class="panel panel-default" id="step1">
+				<div class="panel-body">
+					<div class="form-group">
+						<label class="col-md-2 control-label">报告名称：</label>
+						<div class="col-md-6">
+							<input class="form-control" type="text" name="title" value="{$info['title']}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">相关描述：</label>
+						<div class="col-md-8">
+							<textarea class="form-control" rows="3" name="ctitle">{$info['ctitle']}</textarea>
+						</div>
+					</div>
+					<div class="form-group">
+		                <label class="col-sm-2 control-label">内容描述：</label>
+		                <div class="col-xs-8">
+		                    {php echo tpl_ueditor('desc',$info['desc']);}
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-xs-12 col-sm-3 col-md-2 control-label">报告包含：</label>
+		                <div class="col-sm-8">
+		                    <textarea class="form-control" rows="5" name="sub">{$info['sub']}</textarea>
+		                </div>
+		            </div>
+					<!-- <div class="form-group">
+						<label class="col-md-2 control-label">解锁图片：</label>
+						<div class="col-sm-8">
+							{php echo tpl_form_field_image('thumb',$info['thumb']);}
+							<div class='help-block'>图片尺寸为正方形</div>
+						</div>
+					</div> -->
+					<div class="form-group">
+						<label class="col-md-2 control-label">需支付：</label>
+						<div class="col-md-2">
+							<input class="form-control" type="text" name="price" value="{$info['price']}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">原价：</label>
+						<div class="col-md-2">
+							<input class="form-control" type="text" name="oprice" value="{$info['oprice']}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">优惠券：</label>
+						<div class="col-md-2">
+							<input class="form-control" type="text" name="discount" value="{$info['discount']}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">销量：</label>
+						<div class="col-md-2">
+							<input class="form-control" type="text" name="sales" value="{$info['sales']}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label"></label>
+						<div class="col-md-9">
+							{if empty($info['id'])}
+								<input type="hidden" name="act" value="add">
+							{else}
+								<input type="hidden" name="act" value="edit">
+								<input name="id" type="hidden" value="{$info['id']}">
+							{/if}
+							<input name="submit" id="submit" type="submit" value="保存" class="btn btn-primary min-width">
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+		</form>
+
+	</div>
+</div>
+{template 'common/footer'}

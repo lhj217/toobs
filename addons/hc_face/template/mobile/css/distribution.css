@@ -1,0 +1,390 @@
+html,body{
+	margin:0;
+	padding:0;
+}
+.container{
+	background:#F8F8F8;
+	height:100vh;
+	overflow-y: scroll;
+}
+.column{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.row{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.between{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+.top{
+	width:90vw;
+	padding:0 5vw;
+	height:56vw;
+	background:url(../images/myBg.png) no-repeat;
+	background-size:100% 100%;
+	color:#fff;
+	font-size:3.8vw;
+	padding-top:7vw;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.top>img{
+	width:16vw;
+	height:16vw;
+	border-radius: 50%;
+	margin:3vw 0;
+}
+.Right>span:nth-child(1){
+	font-size:7vw;
+}
+.Right>span:nth-child(2){
+	display: inline-block;
+	margin:2vw 0 0;
+	background:#3D1A90;
+	height:6vw;
+	line-height:6vw;
+	width:20vw;
+	text-align: center;
+	border-radius: 3.5vw;
+	font-size:3vw;
+	box-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+.fuck_1,.fuck_2{
+	width:45vw;
+	height:26.5vw;
+	background:url(../images/fuck_1.png) no-repeat;
+	background-size:100% 100%;
+}
+.fuck_2{
+	background:url(../images/fuck_2.png) no-repeat;
+	background-size:100% 100%;
+}
+
+.fuck_3{
+	width:90vw;
+}
+.fuck_main{
+	color:#fff;
+	margin:11vw 0 0 10vw;
+}
+.fuck_main>span:nth-child(1){
+	font-size:4.6vw;
+	font-weight: bold;
+}
+.fuck_main>span:nth-child(2){
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	font-size:3vw;
+	font-weight: bold;
+	background:#fff;
+	color:#0034A6;
+	padding:0.5vw 3vw;
+	border-radius: 10vw;
+	margin-top:1vw;
+}
+#myCanvas{
+	opacity: 0;
+	position:fixed;
+	top:0;
+	left:0;
+	z-index:-1;
+}
+.down_notice{
+	width:66vw;
+	margin:5vw 0 2vw;
+}
+#imgShow{
+	width:66vw;
+	box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+.shareImglist{
+	display: none;
+	width: 80vw;
+	position:fixed;
+	top:50%;
+	left:50%;
+	border-radius: 6px;
+	transform: translate(-50% ,-50%);
+	background:#fff;
+	padding:6vw 0 4vw;
+	justify-content: center;
+}
+.selShare{
+	width:64vw;
+	flex-wrap: nowrap;
+	white-space:nowrap;
+	overflow-x: scroll;
+	padding:10px 0;
+	justify-content: flex-start;
+}
+.Share_item{
+	width:14vw;
+	margin:0 10px;
+}
+.sel_item{
+	transform: scale(1.07);
+	box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+.myDetail{
+	width:90vw;
+	height:20vw;
+}
+.topRight{
+	height:18vw;
+	align-items: flex-start;
+	justify-content: space-around;
+}
+.avatar{
+	width:18vw;
+	margin-right:4vw;
+	border-radius:10vw;
+	border: 1px solid #fff;
+	box-shadow: 0 0 20px rgba(255,255,255,0.6);
+}
+.user_name{
+	font-size:4.7vw;
+	max-width: 36vw;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+.vip{
+	font-size:3.6vw;
+}
+.vip_img{
+	width:6vw;
+	margin-right:1.2vw;
+}
+.myList{
+	width:90vw;
+	margin:0 auto;
+	background:#fff;
+	box-shadow: 0 0 20px rgba(60,26,144,0.6) ;
+	border-radius: 6px;
+	color:#464646;
+	font-size:3.5vw;
+}
+.myList1{
+	width:90vw;
+	margin:0 auto;
+	border-radius: 6px;
+	margin-top:-30vw;
+	color:#fff;
+	font-size:3.5vw;
+}
+.myItem{
+	padding: 14px 0;
+	margin: 0 5vw;
+}
+.myItem>span{
+	font-weight: bolder;
+}
+.myItem img{
+	width:6px;
+	margin-left:10px;
+	display:block;
+}
+.left{
+	width:30vw;
+}
+.left:nth-child(2){
+	border-left:1px solid #f1f1f1;
+	border-right:1px solid #f1f1f1;
+}
+.left>span{
+	font-size:4vw;
+	color:#402093;
+	margin-top:5px;
+	font-weight: bold;
+}
+/*验证手机*/
+.phone{
+	width:70vw;
+	margin:10vw auto ;
+	font-size:4vw;
+}
+.phone>p{
+	color:#462895;
+	font-weight: bold;
+}
+input{
+	width:70vw;
+	outline: none;
+	border:0;
+	background:transparent;
+	color:#171717;
+}
+.code{
+	padding:4vw 0;
+	border-bottom:1px solid #E3E3E3;
+}
+.msg{
+	width:40vw;
+}
+.codeNum{
+	color:#fff;
+	padding: 0 5vw;
+	height: 6.4vw;
+	line-height: 6.4vw;
+	background:#3D1A90;
+	border-radius: 3.2vw;
+}
+.btn{
+	color:#fff;
+	width:60vw;
+	height: 12vw;
+	line-height: 12vw;
+	background:#3D1A90;
+	border-radius: 6vw;
+	margin:10vw auto;
+	text-align: center;
+}
+/*推广分享*/
+.main{
+	width:90vw;
+	font-size:3.6vw;
+	margin:6vw auto;
+}
+.share,.sharePic{
+	color:#fff;
+	width:60vw;
+	height: 10vw;
+	line-height: 10vw;
+	background:#3D1A90;
+	border:1px solid #3D1A90;
+	border-radius: 5vw;
+	margin:5vw auto;
+	text-align: center;
+}
+.sharePic{
+	background:#fff;
+	color:#3D1A90;
+	border:1px solid #3D1A90;
+}
+.share_main{
+	width:90vw;
+	margin:0 auto;
+}
+.shareItem{
+	width:37vw;
+	height:23.6vw;
+	color:#fff;
+	padding:6vw 0 6vw 5vw;
+	font-size:3.6vw;
+	align-items: flex-start;
+	justify-content: flex-end;
+}
+.shareItem:nth-child(1){
+	background:url(../images/share_icon1.png) no-repeat;	
+	background-size:100% 100%;
+}
+.shareItem:nth-child(2){
+	background:url(../images/share_icon2.png) no-repeat;	
+	background-size:100% 100%;
+}
+.shareItem>span{
+	font-size: 4.3vw;
+}
+.detail{
+	font-size:3vw;
+	margin-top:5px;
+}
+.detail>span:nth-child(2){
+	margin-left:8px;
+	font-weight: bold;
+}
+.shareMain{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100vw;
+	height:100vh;
+	background:rgba(0,0,0,0.8);
+	z-index:111;
+}
+.share_btn{
+	position:fixed;
+	top: 4vw ;
+	right:4vw;
+	width:64vw;
+}
+/*分享海报*/
+.shadow{
+	position:fixed;
+	top:0;
+	width:100vw;
+	height:100vh;
+	display: none;
+	background: rgba(0,0,0,0.8);
+}
+
+
+/*八卦阵的旋转*/
+.shodowS{
+	position:fixed;
+	width:100vw;
+	height:100vh;
+	background:rgba(0,0,0,0.6);
+	z-index:9999;
+	justify-content: center;
+}
+.loading_img{
+	width:30vw;
+}
+.loadings{
+	position:relative;
+	width:30vw;
+	height:30vw;
+}
+.loadings>img{
+	position:absolute;
+}
+.loading_0{
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+	width:22.6vw;
+	background:#fff;
+	border-radius: 11.3vw;
+}
+.loading_1,.loading_2,.loading_5{
+	transform-origin: 50% 50%;
+	-webkit-transform-origin: 50% 50%;
+	animation:3s linear 0s myrotate  infinite;
+	-webkit-animation:3s linear 0s myrotate  infinite;/* Safari and Chrome */
+	animation-fill-mode:forwards;/*动画播放完毕时停止，不回到初始状态*/
+	-webkit-animation-fill-mode:forwards;
+}
+@keyframes myrotate{
+	form {transform:rotate(0deg);}    
+	to    {transform:rotate(360deg);}
+}
+@-webkit-keyframes myrotate{/* Safari and Chrome */
+	form {transform:rotate(0deg);}    
+	to    {transform:rotate(360deg);}
+}
+.loading_3,.loading_4{
+	transform-origin: 50% 50%;
+	-webkit-transform-origin: 50% 50%;
+	animation:3s linear 0s myrotates  infinite;
+	-webkit-animation:3s linear 0s myrotates  infinite;
+}
+@keyframes myrotates{
+	form {transform:rotate(0deg);}    
+	to    {transform:rotate(-360deg);}
+}
+@-webkit-keyframes myrotates{/* Safari and Chrome */
+	form {transform:rotate(0deg);}    
+	to    {transform:rotate(-360deg);}
+}

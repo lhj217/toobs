@@ -1,0 +1,27 @@
+.profitlist{
+	width:92vw;
+	margin:0 auto;
+	border-radius: 6px;
+	box-shadow: 0 0 10px rgba(78,46,153,0.4);
+}
+.tab{
+	width:92vw;
+	text-align: center;
+	background:#4E2E99;
+	color:#fff;
+	font-size:3.6vw;
+	height:10vw;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+}
+.tab_item{
+	width:30vw;
+	margin:0 8vw;
+	height:10vw;
+	box-sizing: border-box;
+	line-height: 10vw;
+	border-bottom:2px solid transparent;
+}
+.sel{
+	border-bottom:2px solid #fff;
+}

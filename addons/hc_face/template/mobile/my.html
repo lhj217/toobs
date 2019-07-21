@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<script src="../addons/hc_face/template/mobile/js/jquery.js"></script>
+	<script src="../addons/hc_face/template/mobile/js/jquery.bxslider.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../addons/hc_face/template/mobile/css/my.css">
+	<script src="../addons/hc_face/template/mobile/js/layer/layer.js"></script>
+	<title>我的面相报告</title>
+	<style type="text/css">
+		/*展示两个按钮*/
+		.nav_icon {
+			width: 50vw;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			position: fixed;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			opacity: 0;
+		}
+
+		.nav_icon1 {
+			width: 20vw;
+			height: 20vw;
+		}
+
+		.footer {
+			position: fixed;
+			bottom: 0;
+			border-top-left-radius: 16px;
+			border-top-right-radius: 16px;
+			width: 100vw;
+			padding: 20px 0;
+			justify-content: center;
+			color: #464646;
+			font-size: 3.6vw;
+			font-weight: bold;
+		}
+
+		.footer img {
+			width: 24px;
+			height: 24px;
+			margin-bottom: 5px;
+		}
+
+		.publish {
+			width: 80px !important;
+			height: 80px !important;
+			margin-top: -50px;
+			border-radius: 90px !important;
+		}
+
+		.index,
+		.my {
+			width: 10vw;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			font-size: 14px;
+			font-weight: bolder;
+			color: #020621;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="nav_icon row">
+		<img class="nav_icon1" onclick="jump(1)"
+			src="../addons/hc_face/template/mobile/images/nav_icon1.png">
+		<img class="nav_icon1" onclick="jump(2)"
+			src="../addons/hc_face/template/mobile/images/nav_icon2.png">
+	</div>
+	{if $basic['hand']==1}
+	<div class="footer row" style="z-index:6;">
+		<div class="index">
+		</div>
+		<div class="column">
+			<img class="publish" onclick="sel_nav()" src="../addons/hc_face/template/mobile/images/publish.png">
+			<span>添加新的面相/手相报告</span>
+		</div>
+		<div class="my">
+		</div>
+	</div>
+	{/if}
+	<div class="container">
+		{if $basic['hand']==1}
+		<div class="top column" style="height:28vw;">
+			<span>面相/手相报告</span>
+		</div>
+		{else}
+		<div class="top column" onclick="window.location.href='{php echo $this->getMobileUrl('upload')}'">
+			<span>面相报告</span>
+			<img src="../addons/hc_face/template/mobile/images/publish.png">
+			<span>添加新的面相报告</span>
+		</div>
+		{/if}
+		<div class="myList">
+			{if $basic['hand']!=1}
+			<div class="myItem between"
+				onclick="{if $count!=0}window.location.href='{php echo $this->getMobileUrl('report',array('rid'=>$rid))}'{else}layer.msg('请先添加报告'){/if}">
+				<span>我的面相报告</span>
+				<img src="../addons/hc_face/template/mobile/images/my_right.png">
+			</div>
+			{/if}
+			<div class="myItem between" onclick="window.location.href='{php echo $this->getMobileUrl('myreport')}'">
+				<span>我的面相报告</span>
+				<div class="row">
+					<span><text style="color:#4A2C96;font-weight:bold">{$count}</text><text>份</text></span>
+					<img src="../addons/hc_face/template/mobile/images/my_right.png">
+				</div>
+			</div>
+			{if $basic['hand']==1}
+			<div class="myItem between" onclick="window.location.href='{php echo $this->getMobileUrl('myhandreport')}'">
+				<span>我的手相报告</span>
+				<div class="row">
+					<span><text style="color:#4A2C96;font-weight:bold">{$hand}</text><text>份</text></span>
+					<img src="../addons/hc_face/template/mobile/images/my_right.png">
+				</div>
+			</div>
+			{/if}
+		</div>
+	</div>
+</body>
+<script>
+	var status = 1;
+	function jump(url) {
+		if (url == 1) {
+			window.location.href = "{php echo $this->getMobileUrl('upload')}"
+			$(".nav_icon").animate({
+				"opacity": "0",
+				"bottom": "0",
+				"z-index": 0
+			},
+				100,
+				"linear",
+				function () {
+					status = 1
+				})
+		} else {
+			window.location.href = "{php echo $this->getMobileUrl('upload_hand')}";
+			$(".nav_icon").animate({
+				"opacity": "0",
+				"bottom": "0",
+				"z-index": 0
+			},
+				100,
+				"linear",
+				function () {
+					status = 1
+				})
+		}
+
+	}
+
+	function sel_nav() {
+		if (status == 1) {
+			$(".nav_icon").animate({
+				"opacity": "1",
+				"bottom": "30vw",
+				"z-index": 33
+			},
+				100,
+				"linear",
+				function () {
+					status = 2
+				})
+		} else if (status == 2) {
+			$(".nav_icon").animate({
+				"opacity": "0",
+				"bottom": "0",
+				"z-index": 0
+			},
+				100,
+				"linear",
+				function () {
+					status = 1
+				})
+		}
+
+	}
+</script>
+
+</html>

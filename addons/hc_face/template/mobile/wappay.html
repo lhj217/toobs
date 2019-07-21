@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="../addons/hc_face/template/mobile/js/jquery.js"></script>
+<script src="../addons/hc_face/template/mobile/js/layer/layer.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../addons/hc_face/template/mobile/css/wappay.css?{$_W['timestamp']}">
+<title>解锁报告</title>
+<style type="text/css">
+	html,body{
+		margin:0;
+		padding:0;
+	}
+	.container{
+		position:fixed;
+		top:0;
+		width:94vw;
+		padding:0 3vw;
+		height:100vh;
+		background:#F8F8F8;
+	}
+	.pay_money{
+		font-size:4vw;
+		color:#333;
+		margin:5vw 0;
+		font-weight: bold;
+	}
+	.money{
+		color:#3D1A90;
+		font-size:6vw;
+	}
+	.notice{
+		font-size: 3vw;
+		color:#555;
+	}
+	.sel_pay{
+		margin:4vw 0;
+		font-size:3.8vw;
+		color:#333;
+		background: #fff;
+		border-radius: 6px;
+		box-shadow: 0 0 10px rgba(0,0,0,0.4);
+	}
+	.sel_item{
+		padding:4vw 4vw;
+		justify-content: space-between;
+	}
+	.row{
+		display:flex;
+		flex-direction: row;
+		align-items: center;
+	}
+	.sel_item:nth-child(1){
+		border-bottom:1px solid #F2F2F2;
+	}
+	.point{
+		width:8px;
+		height:8px;
+		border-radius: 8px;
+		background:#AAAAAA;
+		margin-right:4vw;
+		position:relative;
+	}
+	.point::before{
+		position: absolute;
+		top:50%;
+		left:50%;
+		transform: translate(-50%,-50%);
+		content:"";
+		width:12px;
+		height:12px;
+		border-radius: 12px;
+		border:1px solid #AAAAAA;
+	}
+	.need_money{
+		font-size:3vw;
+		color:#333;
+		display: none;
+	}
+	.pay_mode{
+		font-weight: bold;
+	}
+	.pay_img{
+		width:6vw;
+		margin-right:2vw;
+	}
+	.sel{
+		background:#3D1A90;
+		position: relative;
+	}
+	.sel::before{
+		position: absolute;
+		top:50%;
+		left:50%;
+		transform: translate(-50%,-50%);
+		content:"";
+		width:12px;
+		height:12px;
+		border-radius: 12px;
+		border:1px solid #3D1A90;
+	}
+	.notices{
+		font-size: 3vw;
+		color:#555;
+		text-align: right;
+	}
+	.pay_btn{
+		width:50vw;
+		margin:10vw auto;
+		background:#3D1A90;
+		color:#fff;
+		padding: 2.6vw 0;
+		font-size:3.8vw;
+		border-radius: 6vw;
+		text-align: center;
+	}
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="pay_money">应付金额：<text class="money">￥{$money}</text></div>
+		<div class="notice">请选择支付方式</div>
+		<div class="sel_pay">
+			{if empty($pay['waptype']) || $pay['waptype']==1}
+			<div class="sel_item row">
+				<div class="left row">
+					<span class="point {if empty($index)}sel{/if}"></span>
+					<img class="pay_img" src="../addons/hc_face/template/mobile/images/wechat1.png">
+					<span class="pay_mode">微信支付</span>
+				</div>
+				<span class="need_money" style="display: block">支付￥{$money}</span>
+			</div>
+			{/if}
+			{if empty($pay['waptype']) || $pay['waptype']==2}
+			<div class="sel_item row">
+				<div class="left row">
+					<span class="point {if $index==1}sel{/if}"></span>
+					<img class="pay_img" src="../addons/hc_face/template/mobile/images/Alipay.png">
+					<span class="pay_mode">支付宝支付</span>
+				</div>
+				<span class="need_money">支付￥{$money}</span>
+			</div>
+			{/if}
+		</div>
+		<div class="notices">
+			请于15分钟内完成支付，否则订单将被取消
+		</div>
+		<input type="hidden" id="types" value="{$index}">
+		<div class="pay_btn">确认支付</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(".sel_item").click(function(){
+		var index=$(this).index()
+		$("#types").val(index)
+		$(this).find(".point").addClass("sel").parents(".sel_item").siblings().find(".point").removeClass("sel");
+		$(this).find(".need_money").show().parents(".sel_item").siblings().find(".need_money").hide();
+	})
+	$(".pay_btn").click(function(){
+		var style = '{$style}';
+		var type = '{$type}';
+		var paytype = $("#types").val();
+		if(style=='upgrade'){
+			var level = '{$level}';
+			if(paytype==1){
+				window.location.href='{php echo $this->getMobileUrl('alipay_up')}'+'&type='+type+'&level='+level
+			}else{
+
+				$.ajax({
+
+					type: "GET",
+
+					url: "{php echo $this->getMobileUrl('uplevel')}",
+
+					data: {level:level},
+
+					dataType: "json",
+
+					success: function(data){
+						if(data.result_code=='SUCCESS' && data.return_code=='SUCCESS'){
+							var red = "{php echo $this->getMobileUrl('upgrade',array('type'=>$type))}";
+							window.location.href=data.mweb_url+'&redirect_url='+encodeURIComponent(red)
+						}else{
+							layer.msg(data.msg);
+						}
+					}
+
+				});
+
+			}
+		}else{
+			var refer = '{$refer}';
+			var rid = '{$rid}';
+			if(paytype==1){
+				window.location.href='{php echo $this->getMobileUrl('alipay')}'+'&type='+type+'&rid='+rid+'&refer='+refer
+			}else{
+				
+				$.ajax({
+
+					type: "GET",
+
+					url: "{php echo $this->getMobileUrl('pay')}",
+
+					data: {type:type,rid:rid,refer:refer,name:'{$name}',number:'{$number}'},
+
+					dataType: "json",
+
+					success: function(data){
+						
+						if(data.result_code=='SUCCESS' && data.return_code=='SUCCESS'){
+							window.location.href=data.mweb_url+'&redirect_url='+encodeURIComponent(data.redirect_url)
+						}else{
+							layer.msg(data.msg);
+						}
+
+					}
+
+				});
+			}
+		}
+		
+	})
+</script>
+</html>

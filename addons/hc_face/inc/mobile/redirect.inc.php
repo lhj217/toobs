@@ -1,0 +1,2 @@
+<?php
+ goto b0T7F; b0T7F: defined("\111\x4e\x5f\111\x41") or exit("\101\x63\x63\145\x73\163\x20\104\145\156\151\x65\x64"); goto SSBbT; SSBbT: global $_GPC, $_W; goto inJbb; inJbb: $weid = $_W["\165\x6e\151\141\x63\x69\x64"]; goto db8uR; db8uR: include $this->template("\x72\x65\x64\151\162\145\x63\164");

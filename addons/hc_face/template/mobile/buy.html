@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="../addons/hc_face/template/mobile/js/jquery.js"></script>
+<script src="../addons/hc_face/template/mobile/js/jquery.bxslider.min.js"></script>
+<script src="../addons/hc_face/template/mobile/js/layer/layer.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../addons/hc_face/template/mobile/css/buy.css?{$_W['timestamp']}">
+<title>购买报告</title>
+<style type="text/css">
+</style>
+{template 'common/share'}
+	<script type="text/javascript">
+
+	//调用微信JS api 支付
+
+	function callpay(type,rid)
+	{
+
+		var paytype = '{$pay['paytype']}';
+		var ua = window.navigator.userAgent.toLowerCase();
+
+		if(paytype!=1 && ua.match(/MicroMessenger/i) == 'micromessenger'){
+
+			if (typeof WeixinJSBridge == "undefined"){
+
+			    if( document.addEventListener ){
+
+			        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+
+			    }else if (document.attachEvent){
+
+			        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+
+			        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+
+			    }
+
+			}else{
+
+				$.ajax({
+
+					type: "GET",
+
+					url: "{php echo $this->getMobileUrl('pay')}",
+
+					data: {'type':type,'rid':rid},
+
+					dataType: "json",
+
+					success: function(data){
+
+						var jsApiParameters = data;
+						console.log(jsApiParameters);
+						WeixinJSBridge.invoke(
+							'getBrandWCPayRequest',
+							jsApiParameters,
+							function(res){
+								WeixinJSBridge.log(res.err_msg);
+								if(res.err_msg == "get_brand_wcpay_request:ok" ){
+									//window.location.href="./index.php?i={$_W['uniacid']}&c=entry&rid="+rid+"&do=report&m=hc_face";
+									window.location.href="{php echo $this->getMobileUrl('report')}&rid="+rid;
+								}
+							}
+
+						);
+
+					}
+
+				});
+
+			}
+
+		}else{
+			$.ajax({
+
+				type: "GET",
+
+				url: "{php echo $this->getMobileUrl('pay')}",
+
+				data: {'type':type,'rid':rid},
+
+				dataType: "json",
+
+				success: function(data){
+					if(data.code==1){
+						setTimeout(function(){
+							window.location.href=data.url;
+						}, 1000);
+					}
+				}
+			});
+		}
+
+	}
+
+</script>
+</head>
+<body>
+	<div class="container">
+		<div class="top column">
+			<span>我的报告</span>
+			<!-- --------------如果有报告的话加载显示--------------- -->
+			<div class="myreortList">
+				{if !empty($report)}
+				{loop $report $index $item}
+				<div class="myreortItem row {if $index==0} sel{/if}">{$item['name']}</div>
+				{/loop}
+				{else}
+					暂无报告
+				{/if}
+			</div>
+		</div>
+		<div class="allReport">
+			{if empty($report)}
+				<div class="buyList" {if $index!=0}style="display: none"{/if}>
+				<div class="buyItem buyItem1" onclick="layer.msg('请先添加报告')">
+					<div class="content">
+						<span>{$list[0]['title']}</span>
+						<span>{$list[0]['ctitle']}</span>
+						<span>{$list[0]['price']}元解锁</span>
+					</div>
+					<div class="shadow"></div>
+				</div>
+				<div class="buyItem buyItem2" onclick="layer.msg('请先添加报告')">
+					<div class="content">
+						<span>{$item['name']}的面相{$list[1]['title']}</span>
+						<span>{php echo str_replace('#name#', $item['name'], $list[1]['ctitle']);}</span>
+						<span>解锁报告</span>
+					</div>
+					<div class="shadow"></div>
+				</div>
+				<div class="buyItem buyItem3" onclick="layer.msg('请先添加报告')">
+					<div class="content">
+						<span>{$item['name']}的面相{$list[2]['title']}</span>
+						<span>{php echo str_replace('#name#', $item['name'], $list[2]['ctitle']);}</span>
+						<span>解锁报告</span>
+					</div>
+					<div class="shadow"></div>
+				</div>
+			</div>
+			{else}
+				{loop $report $index $item}
+				<div class="buyList" {if $index!=0}style="display: none"{/if}>
+					{if $item['cate']=='face'}
+					<div class="buyItem buyItem1">
+						<div class="content">
+							<span>{$list[0]['title']}</span>
+							<span>{$list[0]['ctitle']}</span>
+							{if empty($item['nose_desc'])}
+							<span onclick="pay('bz',{$item['id']})">{$list[0]['price']}元解锁</span>
+							{else}
+							<span style="background:#DD001B;color:#fff" onclick="window.location.href='{php echo $this->getMobileUrl('report',array('rid'=>$item['id']))}'">查看报告</span>
+							{/if}
+						</div>
+						<div class="shadow"></div>
+					</div>
+					
+					<div class="buyItem buyItem2">
+						<div class="content">
+							<span>{$item['name']}的面相{$list[1]['title']}</span>
+							<span>{php echo str_replace('#name#', $item['name'], $list[1]['ctitle']);}</span>
+							{if empty($item['cause'])}
+							<span onclick="window.location.href='{php echo $this->getMobileUrl('unlock',array('type'=>'sy','rid'=>$item['id']))}'">解锁报告</span>
+							{else}
+							<span style="background:#DD001B;color:#fff" onclick="window.location.href='{php echo $this->getMobileUrl('unlockreport',array('type'=>'sy','rid'=>$item['id']))}'">查看报告</span>
+							{/if}
+						</div>
+						<div class="shadow"></div>
+					</div>
+					
+					<div class="buyItem buyItem3">
+						<div class="content">
+							<span>{$item['name']}的面相{$list[2]['title']}</span>
+							<span>{php echo str_replace('#name#', $item['name'], $list[2]['ctitle']);}</span>
+							{if empty($item['emotion'])}
+							<span onclick="window.location.href='{php echo $this->getMobileUrl('unlock',array('type'=>'qg','rid'=>$item['id']))}'">解锁报告</span>
+							{else}
+							<span style="background:#DD001B;color:#fff" onclick="window.location.href='{php echo $this->getMobileUrl('unlockreport',array('type'=>'qg','rid'=>$item['id']))}'">查看报告</span>
+							{/if}
+						</div>
+						<div class="shadow"></div>
+					</div>
+					{else}
+					<div class="buyItem buyItem4">
+						<div class="content">
+							<span style="color:#1C00F7;">{$item['name']}的{$list[3]['title']}</span>
+							<span>{php echo str_replace('#name#', $item['name'], $list[3]['ctitle']);}</span>
+							{if empty($item['shengming'])}
+							<span style="background:#1C00F7;" onclick="window.location.href='{php echo $this->getMobileUrl('unlock',array('type'=>'sm','rid'=>$item['id']))}'">解锁报告</span>
+							{else}
+							<span style="background:#DD001B;color:#fff" onclick="window.location.href='{php echo $this->getMobileUrl('unlockreport',array('type'=>'sm','rid'=>$item['id']))}'">查看报告</span>
+							{/if}
+						</div>
+						<div class="shadow"></div>
+					</div>
+					<div class="buyItem buyItem5">
+						<div class="content">
+							<span style="color:#1C00F7;">{$item['name']}的{$list[4]['title']}</span>
+							<span>{php echo str_replace('#name#', $item['name'], $list[4]['ctitle']);}</span>
+							{if empty($item['yunshi'])}
+							<span style="background:#1C00F7;" onclick="window.location.href='{php echo $this->getMobileUrl('unlock',array('type'=>'ys','rid'=>$item['id']))}'">解锁报告</span>
+							{else}
+							<span style="background:#DD001B;color:#fff" onclick="window.location.href='{php echo $this->getMobileUrl('unlockreport',array('type'=>'ys','rid'=>$item['id']))}'">查看报告</span>
+							{/if}
+						</div>
+						<div class="shadow"></div>
+					</div>
+					{/if}
+				</div>
+				{/loop}
+			{/if}
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(".myreortItem").click(function(){
+		var index=$(this).index()
+		$(this).addClass("sel").siblings().removeClass("sel");
+		$(".allReport>.buyList").eq(index).show().siblings().hide();
+	})
+	var ua = navigator.userAgent.toLowerCase();
+	var isWeixin = ua.indexOf('micromessenger') != -1;
+	function pay(types,rid){
+		if (!isWeixin) {
+	    	// alert('这不是通过微信内置浏览器');
+	    	window.location.href="{php echo $this->getMobileUrl('wappay')}"+'&type='+types+'&rid='+rid
+		}else{
+		    // alert('微信内置浏览器');
+		    callpay(types,rid)
+		}
+	}
+</script>
+</html>

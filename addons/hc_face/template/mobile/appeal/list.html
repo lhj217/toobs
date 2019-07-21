@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<script src="../addons/hc_face/template/mobile/js/jquery.js"></script>
+	<link rel="stylesheet" href="../addons/hc_face/template/mobile/appeal/css/list.css?{$_W['timestamp']}">
+	<script src="../addons/hc_face/template/mobile/js/layer/layer.js"></script>
+	<title>{$basic['title']}</title>
+	<style type="text/css">
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="search between">
+			<input id="search" type="text" placeholder="搜索关键词">
+			<span class="searchBtn" onclick="search()">搜索</span>
+		</div>
+		<div class="new_list">
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var lists = [
+		'美图上线"AI开放平台"服务AR试装、广告营销、只能硬件等行业',
+		"化为Atlas，将普惠AI进行到底",
+		"投资人揭秘ToB新风口：新技术激发潜能AI落地在B端",
+		"EMUI9.1新增功能一览UI重绘/AR测量/1秒唤醒AI助手",
+		"云+AI，前途无量的新生意，为何不好做？",
+		"芯片进口总额突破3000亿，中国芯及AI芯片要强大缺什么"
+	]
+	var array = [
+		{
+			"uniquekey": "44731954df76f2582ebac47367dc9868",
+			"title": "蓬佩奥回应朝鲜点名批评：我仍主理美朝谈判",
+			"date": "2019-04-20 15:43",
+			"category": "头条",
+			"author_name": "纵相新闻",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420154313589.html",
+			"thumbnail_pic_s": "http:\/\/06imgmini.eastday.com\/mobile\/20190420\/2019042015_0fa25aa617664e53b22d05c59a3eea9b_6902_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/06imgmini.eastday.com\/mobile\/20190420\/2019042015_269ce56b89fb429496a5455ef92f0e70_3495_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/06imgmini.eastday.com\/mobile\/20190420\/2019042015_a573678aedfb4d87a14001a3f3537476_7058_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "1e84471233dd78db41f6db1bba9fcbea",
+			"title": "《夏洛特烦恼》中，沈腾做检讨时后面横幅谁注意了？学生都经历过",
+			"date": "2019-04-20 15:32",
+			"category": "头条",
+			"author_name": "互娱互乐",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420153241962.html",
+			"thumbnail_pic_s": "http:\/\/01imgmini.eastday.com\/mobile\/20190420\/20190420153241_39aa70f107de4d5b098bc49010eb04c8_6_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/01imgmini.eastday.com\/mobile\/20190420\/20190420153241_39aa70f107de4d5b098bc49010eb04c8_5_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/01imgmini.eastday.com\/mobile\/20190420\/20190420153241_39aa70f107de4d5b098bc49010eb04c8_3_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "0d74f2fcc95debf2618e84999e192309",
+			"title": "唱歌多年不温不火，跨界当演员后一发不可收，一双厚嘴唇印象深刻",
+			"date": "2019-04-20 15:30",
+			"category": "头条",
+			"author_name": "北青网",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420153021324.html",
+			"thumbnail_pic_s": "http:\/\/04imgmini.eastday.com\/mobile\/20190420\/20190420153021_c7c499f3c48dcda263ae74b413b8e238_2_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/04imgmini.eastday.com\/mobile\/20190420\/20190420153021_c7c499f3c48dcda263ae74b413b8e238_1_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/04imgmini.eastday.com\/mobile\/20190420\/20190420153021_c7c499f3c48dcda263ae74b413b8e238_3_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "dcd9a486605e1a30635a9dc3d6e6617b",
+			"title": "广东打击欺诈骗保专项行动追回资金 3892.89 万",
+			"date": "2019-04-20 15:29",
+			"category": "头条",
+			"author_name": "新快报·ZAKER广州",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420152924326.html",
+			"thumbnail_pic_s": "http:\/\/06imgmini.eastday.com\/mobile\/20190420\/20190420152924_96d9456102e491b932051873f63538ad_1_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "807904e6ae2cebbbf18a37b28a411d53",
+			"title": "陕西安康居民土地证抵押期间被转让 两部门介入调查",
+			"date": "2019-04-20 15:29",
+			"category": "头条",
+			"author_name": "新京报",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420152906103.html",
+			"thumbnail_pic_s": "http:\/\/03imgmini.eastday.com\/mobile\/20190420\/20190420152906_44f7c7ae8869b5ea76bdc975a7215bd3_1_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "4c86adaca5d5a33fa594bdd48ccb3dbf",
+			"title": "四月宁可不吃肉，也要多食此菜，营养比牛奶还要高，早食早受益",
+			"date": "2019-04-20 15:27",
+			"category": "头条",
+			"author_name": "今天要吃什么",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420152757197.html",
+			"thumbnail_pic_s": "http:\/\/07imgmini.eastday.com\/mobile\/20190420\/20190420152757_f6ed2ce76fa415e31cf0596514fd71d6_2_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/07imgmini.eastday.com\/mobile\/20190420\/20190420152757_f6ed2ce76fa415e31cf0596514fd71d6_3_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/07imgmini.eastday.com\/mobile\/20190420\/20190420152757_f6ed2ce76fa415e31cf0596514fd71d6_4_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "2c6d5d2c0e8fc38dcb7e5281af1c375c",
+			"title": "“中国花儿之乡”在厦门发邀约：“牡丹月里游临夏”",
+			"date": "2019-04-20 15:23",
+			"category": "头条",
+			"author_name": "中国新闻网",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420152349589.html",
+			"thumbnail_pic_s": "http:\/\/07imgmini.eastday.com\/mobile\/20190420\/20190420152349_aaaca858e975db4eb2aa43346331ebbf_1_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/07imgmini.eastday.com\/mobile\/20190420\/20190420152349_aaaca858e975db4eb2aa43346331ebbf_2_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "0c892e728c9050a82032e8999852a9fe",
+			"title": "唱茶歌祭茶山 “中国第一产茶县”喊山开茶",
+			"date": "2019-04-20 15:23",
+			"category": "头条",
+			"author_name": "中国新闻网",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420152349537.html",
+			"thumbnail_pic_s": "http:\/\/04imgmini.eastday.com\/mobile\/20190420\/20190420152349_187f9cf00fdd467b9f16a17cd662dda0_3_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/04imgmini.eastday.com\/mobile\/20190420\/20190420152349_187f9cf00fdd467b9f16a17cd662dda0_4_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/04imgmini.eastday.com\/mobile\/20190420\/20190420152349_187f9cf00fdd467b9f16a17cd662dda0_1_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "b3cf85e7b33a7f78aa60bd5a95c6889e",
+			"title": "孙怡净身高达到一米七，体重保持的很好，午餐非常简单！",
+			"date": "2019-04-20 15:20",
+			"category": "头条",
+			"author_name": "小李子八卦事",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420152020064.html",
+			"thumbnail_pic_s": "http:\/\/01imgmini.eastday.com\/mobile\/20190420\/20190420152020_0b31213651e3cd810994e33267d14d12_3_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/01imgmini.eastday.com\/mobile\/20190420\/20190420152020_0b31213651e3cd810994e33267d14d12_2_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/01imgmini.eastday.com\/mobile\/20190420\/20190420152020_0b31213651e3cd810994e33267d14d12_1_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "756a793648824cd72e8f027157bb6911",
+			"title": "街拍美女：百看不厌的小姐姐，穿搭时尚比基尼，突显女性优美身姿",
+			"date": "2019-04-20 15:17",
+			"category": "头条",
+			"author_name": "时尚潮流最前沿",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420151749584.html",
+			"thumbnail_pic_s": "http:\/\/03imgmini.eastday.com\/mobile\/20190420\/2019042015_fedd60fc9b93471fbe15de6ec114a225_4069_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/03imgmini.eastday.com\/mobile\/20190420\/2019042015_eed801d383b14e708c5442e08bb93afd_7207_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/03imgmini.eastday.com\/mobile\/20190420\/2019042015_28efb711a5234c61a1b541c284656f17_9607_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "daabde76c10970928fe9504e2027be21",
+			"title": "原来别人的手表可以戴十年以上是因为这样保养的",
+			"date": "2019-04-20 15:17",
+			"category": "头条",
+			"author_name": "宝诚时间廊",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420151718829.html",
+			"thumbnail_pic_s": "http:\/\/05imgmini.eastday.com\/mobile\/20190420\/20190420151718_c55662b2ee6946d1964b882c14517186_5_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/05imgmini.eastday.com\/mobile\/20190420\/20190420151718_c55662b2ee6946d1964b882c14517186_6_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/05imgmini.eastday.com\/mobile\/20190420\/20190420151718_c55662b2ee6946d1964b882c14517186_2_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "b3dcf551e5c0c6061c747fa191e62d44",
+			"title": "公务员笔试今天开考！德州14494名考生走入考场追梦",
+			"date": "2019-04-20 15:14",
+			"category": "头条",
+			"author_name": "大众网",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420151406701.html",
+			"thumbnail_pic_s": "http:\/\/09imgmini.eastday.com\/mobile\/20190420\/20190420151406_d8b63552c824346f3b4b6240062ca7ad_2_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/09imgmini.eastday.com\/mobile\/20190420\/20190420151406_d8b63552c824346f3b4b6240062ca7ad_1_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/09imgmini.eastday.com\/mobile\/20190420\/20190420151406_d8b63552c824346f3b4b6240062ca7ad_3_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "34d6e12f7101c6d41c4483f6b2285eb5",
+			"title": "《王牌对王牌》收官跑男来踢馆，却出乎意料变成史上最尬一期",
+			"date": "2019-04-20 15:13",
+			"category": "头条",
+			"author_name": "北青网",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420151304899.html",
+			"thumbnail_pic_s": "http:\/\/00imgmini.eastday.com\/mobile\/20190420\/20190420151304_68d9cda97ef9ad9c85340bb2f6607163_1_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/00imgmini.eastday.com\/mobile\/20190420\/20190420151304_68d9cda97ef9ad9c85340bb2f6607163_3_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/00imgmini.eastday.com\/mobile\/20190420\/20190420151304_68d9cda97ef9ad9c85340bb2f6607163_2_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "813a72c35b724a9d5edcc21cc1c0e37a",
+			"title": "人走后真的会灵魂脱壳吗？科学家用量子解释，他们还存在于世界上",
+			"date": "2019-04-20 15:12",
+			"category": "头条",
+			"author_name": "探索宇宙奥秘",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420151256601.html",
+			"thumbnail_pic_s": "http:\/\/08imgmini.eastday.com\/mobile\/20190420\/2019042015_cc046781910549e2bfc31e8e4d4ec9c0_8933_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/08imgmini.eastday.com\/mobile\/20190420\/2019042015_7bb6af2bc31e451b92ec5d0f8d285a74_6793_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/08imgmini.eastday.com\/mobile\/20190420\/2019042015_c4443ea93288403085704a26cf54ed41_7375_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "d7dfa38745776d0ec5d8ee32f459f61f",
+			"title": "内涵笑话10则：吃兰州牛肉面消费5680元，朋友真强",
+			"date": "2019-04-20 15:09",
+			"category": "头条",
+			"author_name": "爆笑大街250号",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420150920841.html",
+			"thumbnail_pic_s": "http:\/\/01imgmini.eastday.com\/mobile\/20190420\/20190420150920_b26f5b03536f088ce377d30b624c03e1_1_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/01imgmini.eastday.com\/mobile\/20190420\/20190420150920_b26f5b03536f088ce377d30b624c03e1_2_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "8442af65b51ea73dc512c4b0a4e1e2ca",
+			"title": "我们到底生活在几维空间中？科学家：克莱因瓶已给出答案",
+			"date": "2019-04-20 15:08",
+			"category": "头条",
+			"author_name": "探索宇宙奥秘",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420150859654.html",
+			"thumbnail_pic_s": "http:\/\/03imgmini.eastday.com\/mobile\/20190420\/2019042015_61cb646436e74eb4a70f7ed6aaf94632_6129_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/03imgmini.eastday.com\/mobile\/20190420\/2019042015_a8738833e39a483f96cd6bb8726a9c57_8297_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/03imgmini.eastday.com\/mobile\/20190420\/2019042015_6defce8b5a0847c1938ebcee4eb6e07f_4858_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "623bcec3a9ce3e7f639dedbee09dd333",
+			"title": "接档《王牌》：李晨带队郑恺变苍老，新人来头大，baby再现神演技",
+			"date": "2019-04-20 15:08",
+			"category": "头条",
+			"author_name": "四眼说娱乐",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420150856355.html",
+			"thumbnail_pic_s": "http:\/\/08imgmini.eastday.com\/mobile\/20190420\/20190420150856_000d54c97c390a395c7dcf42c8c6c9cf_5_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/08imgmini.eastday.com\/mobile\/20190420\/20190420150856_000d54c97c390a395c7dcf42c8c6c9cf_2_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/08imgmini.eastday.com\/mobile\/20190420\/20190420150856_000d54c97c390a395c7dcf42c8c6c9cf_1_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "fbc577c306d36eb49095310eb5dc88c6",
+			"title": "黑龙江省开展“龙威2019-1”森林扑灭火实兵演练",
+			"date": "2019-04-20 15:03",
+			"category": "头条",
+			"author_name": "中国新闻网",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420150332469.html",
+			"thumbnail_pic_s": "http:\/\/02imgmini.eastday.com\/mobile\/20190420\/20190420150332_ba30e5c050fe0903bb33d845d74872f7_1_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/02imgmini.eastday.com\/mobile\/20190420\/20190420150332_ba30e5c050fe0903bb33d845d74872f7_4_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/02imgmini.eastday.com\/mobile\/20190420\/20190420150332_ba30e5c050fe0903bb33d845d74872f7_2_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "ee0856a491382e6a1e040d9d04366797",
+			"title": "奔跑西安 拥抱中国“一带一路”陕西西安（三星）·2019城墙",
+			"date": "2019-04-20 15:02",
+			"category": "头条",
+			"author_name": "西北信息报社",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420150250553.html",
+			"thumbnail_pic_s": "http:\/\/05imgmini.eastday.com\/mobile\/20190420\/20190420150250_be23e27dce80b4d9c77a4c842e9e01fa_5_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/05imgmini.eastday.com\/mobile\/20190420\/20190420150250_be23e27dce80b4d9c77a4c842e9e01fa_1_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/05imgmini.eastday.com\/mobile\/20190420\/20190420150250_be23e27dce80b4d9c77a4c842e9e01fa_3_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "d708b3d3b3b2b6f7925b8afe6fb38a9b",
+			"title": "重磅经济数据超预期，牛市稳了！",
+			"date": "2019-04-20 15:02",
+			"category": "头条",
+			"author_name": "新民晚报",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420150243439.html",
+			"thumbnail_pic_s": "http:\/\/00imgmini.eastday.com\/mobile\/20190420\/20190420150243_b2442f0e9ffafd3774b4fc84561858af_1_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/00imgmini.eastday.com\/mobile\/20190420\/20190420150243_b2442f0e9ffafd3774b4fc84561858af_6_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/00imgmini.eastday.com\/mobile\/20190420\/20190420150243_b2442f0e9ffafd3774b4fc84561858af_5_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "5553325a7bf31a565a5dbe03f70dd819",
+			"title": "王者荣耀：15岁小姐姐COS新英雄瑶，网友：求附体！",
+			"date": "2019-04-20 15:01",
+			"category": "头条",
+			"author_name": "电竞花生",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420150138475.html",
+			"thumbnail_pic_s": "http:\/\/03imgmini.eastday.com\/mobile\/20190420\/2019042015_8c6417b51155445e80e0e3f93c9b778d_9418_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/03imgmini.eastday.com\/mobile\/20190420\/2019042015_09a4252a117a49fbbe358310f75ed4bb_5376_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/03imgmini.eastday.com\/mobile\/20190420\/2019042015_5739f8252aa7460eba558b2c78920962_0472_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "04fdfa79925b63d352a561baef1d13b5",
+			"title": "中国学者呼吁进一步加强“一带一路”“软联通”",
+			"date": "2019-04-20 15:01",
+			"category": "头条",
+			"author_name": "新华社",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420150101357.html",
+			"thumbnail_pic_s": "http:\/\/04imgmini.eastday.com\/mobile\/20190420\/20190420150101_8aa93d4f4cdbcb39649fd3d0c6e46bec_4_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/04imgmini.eastday.com\/mobile\/20190420\/20190420150101_8aa93d4f4cdbcb39649fd3d0c6e46bec_1_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/04imgmini.eastday.com\/mobile\/20190420\/20190420150101_8aa93d4f4cdbcb39649fd3d0c6e46bec_3_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "b3f5ee1bc706f2d5f0b88f92f0469d24",
+			"title": "当年影响力堪比微信的天涯论坛，或将备战科创板",
+			"date": "2019-04-20 15:00",
+			"category": "头条",
+			"author_name": "潮声财经社",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420150051148.html",
+			"thumbnail_pic_s": "http:\/\/07imgmini.eastday.com\/mobile\/20190420\/20190420150051_d0b3a0183ea844edb1c9bb77d0bdba3e_1_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/07imgmini.eastday.com\/mobile\/20190420\/20190420150051_d0b3a0183ea844edb1c9bb77d0bdba3e_3_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/07imgmini.eastday.com\/mobile\/20190420\/20190420150051_d0b3a0183ea844edb1c9bb77d0bdba3e_4_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "f2be33e21d4af7540f57e930c80874c8",
+			"title": "妹子，你这马桶吸是不是用过的？",
+			"date": "2019-04-20 14:59",
+			"category": "头条",
+			"author_name": "心不动则不痛",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420145950514.html",
+			"thumbnail_pic_s": "http:\/\/08imgmini.eastday.com\/mobile\/20190420\/2019042014_4d1df7feb4bc42dcb718513e5feff1d9_1785_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/08imgmini.eastday.com\/mobile\/20190420\/2019042014_e504de4b865d4baca80979a15659f7d7_3913_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/08imgmini.eastday.com\/mobile\/20190420\/2019042014_76bc90a5bf9d4457aa3c6ebdbf75b375_6137_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "412cc72d952b9b7700fb5d8e386565af",
+			"title": "笑话段子，你当初死缠烂打的追求老娘，心里是个什么样的想法",
+			"date": "2019-04-20 14:59",
+			"category": "头条",
+			"author_name": "笑一天",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420145912867.html",
+			"thumbnail_pic_s": "http:\/\/09imgmini.eastday.com\/mobile\/20190420\/20190420145912_40e91aa24ac25f3218efbef884922a58_3_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/09imgmini.eastday.com\/mobile\/20190420\/20190420145912_40e91aa24ac25f3218efbef884922a58_2_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/09imgmini.eastday.com\/mobile\/20190420\/20190420145912_40e91aa24ac25f3218efbef884922a58_1_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "5fbb0d843befb292b5c8f598dd437516",
+			"title": "湾里请茶节在太平镇心街隆重举行",
+			"date": "2019-04-20 14:58",
+			"category": "头条",
+			"author_name": "中国日报网",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420145847620.html",
+			"thumbnail_pic_s": "http:\/\/00imgmini.eastday.com\/mobile\/20190420\/20190420145847_b6a274f731d9e27be29d0de39af258d0_8_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/00imgmini.eastday.com\/mobile\/20190420\/20190420145847_b6a274f731d9e27be29d0de39af258d0_10_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/00imgmini.eastday.com\/mobile\/20190420\/20190420145847_b6a274f731d9e27be29d0de39af258d0_5_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "4fec6555367eb19f1b535d56967664a7",
+			"title": "美国夫妇残忍虐待13名亲生子女：囚禁、殴打和不见天日的梦魇",
+			"date": "2019-04-20 14:58",
+			"category": "头条",
+			"author_name": "纵相新闻",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420145821302.html",
+			"thumbnail_pic_s": "http:\/\/01imgmini.eastday.com\/mobile\/20190420\/2019042014_231510a5c77b4a318c327cee84473e7a_3625_cover_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/01imgmini.eastday.com\/mobile\/20190420\/2019042014_d497b6db0103404fb2c524518bcb21f2_8636_cover_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/01imgmini.eastday.com\/mobile\/20190420\/2019042014_25d4d2a5fdd6448296c73b15bf63c0ca_8606_cover_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "c419f3134da99ee31007f19f34462fb7",
+			"title": "自我感觉良好，总认为自己很优秀，很自恋的三大生肖",
+			"date": "2019-04-20 14:57",
+			"category": "头条",
+			"author_name": "单眼皮大叔",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420145758416.html",
+			"thumbnail_pic_s": "http:\/\/04imgmini.eastday.com\/mobile\/20190420\/2019042014_c08ef4c8c0a84dc8bd22e9717afa077c_5422_cover_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "1f12b095eee4a78bd8e5e96b191ab2d4",
+			"title": "调皮男孩手指被戒指卡住 民警联系消防员切割取下",
+			"date": "2019-04-20 14:57",
+			"category": "头条",
+			"author_name": "新民网",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420145724656.html",
+			"thumbnail_pic_s": "http:\/\/03imgmini.eastday.com\/mobile\/20190420\/20190420145724_3d14429e0245786d80d47f094253f6d5_1_mwpm_03200403.jpg"
+		},
+		{
+			"uniquekey": "7a76cc5283c0ba64ac492623c713c6a9",
+			"title": "汉川市信访局干部参加汉川市第四届徙步行活动",
+			"date": "2019-04-20 14:56",
+			"category": "头条",
+			"author_name": "和谐汉川",
+			"url": "http:\/\/mini.eastday.com\/mobile\/190420145600046.html",
+			"thumbnail_pic_s": "http:\/\/03imgmini.eastday.com\/mobile\/20190420\/20190420145600_54c96fe0df391a3d038097e4f096b491_3_mwpm_03200403.jpg",
+			"thumbnail_pic_s02": "http:\/\/03imgmini.eastday.com\/mobile\/20190420\/20190420145600_54c96fe0df391a3d038097e4f096b491_2_mwpm_03200403.jpg",
+			"thumbnail_pic_s03": "http:\/\/03imgmini.eastday.com\/mobile\/20190420\/20190420145600_54c96fe0df391a3d038097e4f096b491_1_mwpm_03200403.jpg"
+		}
+	]
+	window.onload = function () {
+		for (var i in array) {
+			$(".new_list").append(`
+				<div class="new_item" onclick="window.location.href='`+ array[i].url + `'">
+					<span>`+ array[i].title + `</span>
+					<div class="img_list">
+					<img src="`+ array[i].thumbnail_pic_s + `" alt="">
+					<img onerror="this.style.display='none'" src="`+ array[i].thumbnail_pic_s02 + `" alt="">
+					<img onerror="this.style.display='none'" src="`+ array[i].thumbnail_pic_s03 + `" alt="">
+				</div>
+		`)
+		}
+	}
+
+	function search() {
+		var search = $("#search").val().toLowerCase();
+		if (!search) {
+			layer.msg("请输入内容")
+			$(".new_list>.new_item").css("display", "block");
+			return false
+		}
+		$(".new_list>.new_item").css("display", "none")
+		for (var i in array) {
+			(function (number) {
+				let str = array[number].title.toLowerCase()
+				let status = str.indexOf(search)
+				if (status != -1) {
+					let num = parseInt(number + 1)
+					$(".new_list>.new_item:nth-child(" + num + ")").css("display", "block")
+				} 
+			})(i)
+		}
+	}
+</script>
+
+</html>

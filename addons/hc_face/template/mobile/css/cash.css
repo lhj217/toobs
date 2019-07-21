@@ -1,0 +1,95 @@
+html,p,body{
+	margin:0;
+	padding:0;
+}
+.row{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.column{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.between{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+.container{
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	background: #F5F3F8;
+	overflow-y: scroll;
+}
+.top{
+	width:100vw;
+	padding:6vw 0;
+	color:#3C1A8F;
+	font-size:3.8vw;
+}
+.top>img{
+	width:20vw;
+}
+.num>text {
+	font-size:6vw;
+	font-weight: bold;
+}
+.group{
+	width:90vw;
+	box-shadow: 0 0 20px rgba(78,46,153,0.6);
+	border-radius: 6px;
+	background:#fff;
+	margin:0 auto;
+}
+.groups{
+	width:92vw;
+	background:#fff;
+	margin:0 auto;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+.groupItem{
+	font-size:3.6vw;
+	padding:4vw 0;
+	color:#545454;
+	text-align: center;
+	overflow:hidden;
+	border-top:1px solid #EDEDED;
+}
+.userName>img{
+	width:10vw;
+	height:10vw;
+	margin-right:10px;
+	border-radius:6vw;
+	border:1px solid #f1f1f1;
+}
+.userName{
+	justify-content: center;
+}
+.name{
+	font-weight: bold;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow:ellipsis;
+	max-width:40vw;
+	margin-bottom:1vw;
+}
+.time{
+	font-size:3vw;
+	color:#B3B3B3;    
+}
+.groupItem{
+	margin:0 4vw;
+	padding:4vw 0;
+}
+.money{
+	color:#25BC07;
+	font-weight: bold;
+}
+.detail{
+	align-items: flex-start;
+}

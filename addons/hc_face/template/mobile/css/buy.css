@@ -1,0 +1,148 @@
+html,body{
+	margin:0;
+	padding:0;
+}
+.container{
+	background:#F8F8F8;
+	height:100vh;
+}
+.column{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.row{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.between{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+.top{
+	width:100vw;
+	height:46vw;
+	background:url(../images/myBg.png) no-repeat;
+	background-size:100% 100%;
+	color:#fff;
+	font-size:3.6vw;
+	padding-top:7vw;
+}
+.top>span:nth-child(1){
+	font-size:7vw;
+}
+.buyList{
+	width:90vw;
+	margin:0 auto;
+	margin-top:-18vw;
+	font-size:3.5vw;
+	border-radius: 10px;
+}
+.buyItem1{
+	background:url(../images/buy_icon1.png) no-repeat;
+	background-size:100% 100%;
+}
+.buyItem2{
+	background:url(../images/buy_icon2.png) no-repeat;
+	background-size:100% 100%;
+}
+.buyItem3{
+	background:url(../images/buy_icon3.png) no-repeat;
+	background-size:100% 100%;
+}
+.buyItem4{
+	background:url(../images/buy_icon6.png) no-repeat;
+	background-size:100% 100%;
+}
+.buyItem5{
+	background:url(../images/buy_icon7.png) no-repeat;
+	background-size:100% 100%;
+}
+.buyItem{
+	width:90vw;
+	height:32vw;
+	border-radius: 10px;
+	margin-bottom:20px;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.6) ;
+	position: relative;
+}
+.shadow{
+	width:90vw;
+	height:32vw;
+	border-radius: 10px;
+	position:absolute;
+	top:0;
+	left:0;
+	background:rgba(255,255,255,0.5);
+}
+.content{
+	margin-left:8vw;
+	height:32vw;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	font-size:3.5vw;
+	color:#777777;
+}
+.content>span{
+	z-index:1;
+}
+.content>span:nth-child(2){
+	padding-right:5vw;
+	display:-webkit-box;
+	overflow:hidden;
+	-webkit-box-orient:vertical;
+	-webkit-line-clamp:2;
+	margin-top:4px;
+}
+.content>span:nth-child(1){
+	color:#3E1C8F;
+	font-size:5vw;
+	font-weight: bold;
+}
+.content>span:nth-child(3){
+	color:#fff;
+	font-size:3.4vw;
+	background:#8C00BD;
+	width:fit-content;
+	width:-webkit-fit-content;
+	width:-moz-fit-content;
+	height:24px;
+	line-height: 24px;
+	padding:0 20px;
+	border-radius: 14px;
+	margin-top:5px;
+}
+
+
+.myreortList{
+	display: flex;
+	flex-direction: row;
+	width:90vw;
+	margin:5vw auto;
+	flex-wrap: nowrap;
+	white-space: nowrap;
+	overflow-x: scroll;
+}
+.myreortItem{
+	width:fit-content;
+	width:-webkit-fit-content;
+	width:-moz-fit-content;
+	height:8vw;
+	line-height: 8vw;
+	background:#fff;
+	padding:0 5vw;
+	color:#3D1A90;
+	font-size:4vw;
+	font-weight: bold;
+	border-radius: 4vw;
+	margin-right:3vw;
+}
+.sel{
+	color:#fff;
+	background:#3D1A90;
+}

@@ -1,0 +1,143 @@
+html,body,p{
+	margin:0;
+	padding:0;
+}
+.row{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.between{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+.container{
+	position: fixed;
+	width: 90vw;
+	padding:0 5vw 5vh;
+	height:95vh;
+	font-size:3.8vw;
+    overflow-y: scroll;
+	background:#F8F8F8;
+}
+.title{
+	color:#3C1A8F;
+	font-size:3vw;
+	margin:4vw 0 2vw;
+	align-items: flex-end;
+}
+.title>span:nth-child(1){
+	font-size:6vw;
+	font-weight: bold;
+}
+.content{
+	font-size:3.4vw;
+}
+.report{
+	width:90vw;
+	padding:4vw 0 ;
+	margin:5vw auto;
+	border-radius: 6px;
+	background:#fff;
+	box-shadow: 0 0 10px rgba(78,46,153,0.6);
+}
+.report>span:nth-child(1){
+	font-size:5vw;
+	font-weight: bold;
+	text-align: center;
+	display: block;
+	color:#3C1A8F;
+}
+.reportList{
+	display: flex;
+	flex-direction: row;
+	width:80vw;
+	margin:2vw auto 0;
+	padding-bottom:3vw;
+	flex-wrap: wrap;
+	border-bottom:1px solid #f1f1f1 ;
+	justify-content: space-between;
+}
+.repotyItem{
+	min-width:40vw;
+	margin-top:2vw;
+	color:#474747;
+	font-size:4vw;
+}
+.repotyItem:nth-child(even){
+	text-align: right;
+}
+.repotyItem>span{
+	color:#3C1A8F;
+	margin-right:5px;
+}
+.buyNotice{
+	width:80vw;
+	margin: 2vw auto;
+	font-size:3.8vw;
+	color:#909090;
+}
+.buyNotice>span{
+	color:#5C42A0;
+}
+.payDetail{
+	width:84vw;
+	margin:0 auto;
+	padding:3vw 0 4vw;
+	font-size:4vw;
+	color:#525252;
+	font-weight: bold;
+	border-bottom:1px solid #EAEAEA;
+}
+.payDetail>div{
+	margin-bottom:2vw;
+}
+.need>span:nth-child(2){
+	color:#E13329;
+	font-size:6vw;
+}
+.discount>span:nth-child(2){
+	color:#E13329;
+}
+.origin>span:nth-child(2){
+	text-decoration:  line-through;
+}
+
+.upload_photo{
+	background:url(../images/btn.png) no-repeat;
+	background-size:100% 100%;
+	width:76vw;
+	height:13.4vw;
+	margin:0 auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	font-size:4vw;
+	margin-top:6vw;
+	color:#fff;
+}
+.btn1{
+	background:url(../images/btn1.png) no-repeat;
+	background-size:100% 100%;
+	margin-top:0vw;
+}
+
+/*首页分享*/
+.shareMain{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100vw;
+	height:100vh;
+	background:rgba(0,0,0,0.8);
+	z-index:111;
+}
+.share_btn{
+	position:fixed;
+	top: 4vw ;
+	right:4vw;
+	width:64vw;
+}

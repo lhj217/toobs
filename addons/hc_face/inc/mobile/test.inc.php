@@ -1,0 +1,2 @@
+<?php
+ goto hE8ca; Xl9iP: $weid = $_W["\165\156\151\x61\x63\151\x64"]; goto ixomD; e_ou9: require_once IA_ROOT . "\x2f\141\x64\x64\x6f\x6e\163\57\x68\x63\137\x66\141\143\x65\57\x69\156\143\x2f\x6d\x6f\x64\145\154\57\x61\x63\x63\157\x75\x6e\x74\56\x70\x68\160"; goto IoHoP; IoHoP: global $_GPC, $_W; goto Xl9iP; hE8ca: defined("\111\116\x5f\x49\101") or exit("\x41\143\143\x65\163\x73\40\104\145\x6e\151\x65\x64"); goto e_ou9; ixomD: include $this->template("\164\145\x73\164");

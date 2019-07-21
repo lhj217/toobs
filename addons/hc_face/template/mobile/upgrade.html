@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<script src="../addons/hc_face/template/mobile/js/jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="../addons/hc_face/template/mobile/css/upgrade.css?{$_W['timestamp']}">
+	<title>全民代理</title>
+	{template 'common/share'}
+	<script type="text/javascript">
+	//调用微信JS api 支付
+		function callpay(obj)
+		{
+			var paytype = '{$pay['paytype']}';
+			let level = $('.sel').attr('data-type');
+	    	var ua = window.navigator.userAgent.toLowerCase();
+			if(paytype!=1 && ua.match(/MicroMessenger/i) == 'micromessenger'){
+				if (typeof WeixinJSBridge == "undefined"){
+				    if( document.addEventListener ){
+				        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+				    }else if (document.attachEvent){
+				        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+				        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+				    }
+				}else{
+					$.ajax({
+						type: "GET",
+						url: "{php echo $this->getMobileUrl('uplevel')}",
+						data: {level:level},
+						dataType: "json",
+						success: function(data){
+							var jsApiParameters = data;
+							WeixinJSBridge.invoke(
+								'getBrandWCPayRequest',
+								jsApiParameters,
+								function(res){
+									WeixinJSBridge.log(res.err_msg);
+									if(res.err_msg == "get_brand_wcpay_request:ok" ){
+										window.location.reload();
+									}
+								}
+							);
+						}
+					});
+				}
+			}else if(paytype!=1 && ua.match(/MicroMessenger/i) != 'micromessenger'){
+				$.ajax({
+
+					type: "GET",
+
+					url: "{php echo $this->getMobileUrl('uplevel')}",
+
+					data: {level:level},
+
+					dataType: "json",
+
+					success: function(data){
+						//var red = data.host + "/app/index.php?i={$_W[uniacid]}&c=entry&do=upgrade&type={$type}&m=hc_face";
+						var red = "{php echo $this->getMobileUrl('upgrade',array('type'=>$type))}";
+						window.location.href=data.mweb_url+'&redirect_url='+encodeURIComponent(red)
+					}
+
+				});
+			}else{
+				$.ajax({
+					type: "GET",
+					url: "{php echo $this->getMobileUrl('uplevel')}",
+					data: {level:level},
+					dataType: "json",
+					success: function(data){
+						console.log(data);
+						if(data.code==1){
+							window.location.href=data.url;
+						}
+
+					}
+				});
+			}
+		}
+	</script>
+</head>
+<body>
+	<div class="container">
+		<img class="title" src="../addons/hc_face/template/mobile/images/upgrade_iocn1.png">
+		<div class="tab">
+			<div class="tab_item {if $type==0}sel{/if}" data-type="0">{$fenxiao[grade][0][grade]}</div>
+			<div class="tab_item {if $type==1}sel{/if}" data-type="1">{$fenxiao[grade][1][grade]}</div>
+			<div class="tab_item {if $type==2}sel{/if}" data-type="2">{$fenxiao[grade][2][grade]}</div>
+		</div>
+		<div>
+			<div class="tab_content" style="display: none;">
+				<div class="main row">
+					{if $fenxiao[level]==3}
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][0][commission1]}<text style="font-size:3.9vw">%</text></span>
+							<span>一级代理</span>
+						</div>
+						<span>享受一级代理佣金收益{$fenxiao[commission][0][commission1]}%提成</span>
+					</div>
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][0][commission2]}<text style="font-size:3.9vw">%</text></span>
+							<span>二级代理</span>						
+						</div>
+						<span>享受二级代理佣金收益{$fenxiao[commission][0][commission2]}%提成</span>
+					</div>
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][0][commission3]}<text style="font-size:3.9vw">%</text></span>
+							<span>三级代理</span>
+						</div>
+						<span>享受三级代理佣金收益{$fenxiao[commission][0][commission3]}%提成</span>
+					</div>
+					{/if}
+					{if $fenxiao[level]==2}
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][0][commission1]}<text style="font-size:3.9vw">%</text></span>
+							<span>一级代理</span>
+						</div>
+						<span>享受一级代理佣金收益{$fenxiao[commission][0][commission1]}%提成</span>
+					</div>
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][0][commission2]}<text style="font-size:3.9vw">%</text></span>
+							<span>二级代理</span>						
+						</div>
+						<span>享受二级代理佣金收益{$fenxiao[commission][0][commission2]}%提成</span>
+					</div>
+					{/if}
+					{if $fenxiao[level]==1}
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][0][commission1]}<text style="font-size:3.9vw">%</text></span>
+							<span>一级代理</span>
+						</div>
+						<span>享受一级代理佣金收益{$fenxiao[commission][0][commission1]}%提成</span>
+					</div>
+					{/if}
+				</div>
+				<div class="buy column">
+					<span>晋升【{$fenxiao[grade][0][grade]}】后将享有以上的高级权益</span>
+					<span class="level2">当前身份<text style="font-size:5.5vw;"></text></text></span>
+				</div>
+			</div>
+			<div class="tab_content" {if $type!=1}style="display: none;"{/if}>
+				<div class="main row">
+					{if $fenxiao[level]==3}
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][1][commission1]}<text style="font-size:3.9vw">%</text></span>
+							<span>一级代理</span>
+						</div>
+						<span>享受一级代理佣金收益{$fenxiao[commission][1][commission1]}%提成</span>
+					</div>
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][1][commission2]}<text style="font-size:3.9vw">%</text></span>
+							<span>二级代理</span>						
+						</div>
+						<span>享受二级代理佣金收益{$fenxiao[commission][1][commission2]}%提成</span>
+					</div>
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][1][commission3]}<text style="font-size:3.9vw">%</text></span>
+							<span>三级代理</span>
+						</div>
+						<span>享受三级代理佣金收益{$fenxiao[commission][1][commission3]}%提成</span>
+					</div>
+					{/if}
+					{if $fenxiao[level]==2}
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][1][commission1]}<text style="font-size:3.9vw">%</text></span>
+							<span>一级代理</span>
+						</div>
+						<span>享受一级代理佣金收益{$fenxiao[commission][1][commission1]}%提成</span>
+					</div>
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][1][commission2]}<text style="font-size:3.9vw">%</text></span>
+							<span>二级代理</span>						
+						</div>
+						<span>享受二级代理佣金收益{$fenxiao[commission][1][commission2]}%提成</span>
+					</div>
+					{/if}
+					{if $fenxiao[level]==1}
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][1][commission1]}<text style="font-size:3.9vw">%</text></span>
+							<span>一级代理</span>
+						</div>
+						<span>享受一级代理佣金收益{$fenxiao[commission][1][commission1]}%提成</span>
+					</div>
+					{/if}
+				</div>
+				<div class="buy column">
+					<span>晋升【{$fenxiao[grade][1][grade]}】后将享有以上的高级权益</span>
+					{if $user['level']>=2}
+					<span class="level2">当前身份<text style="font-size:5.5vw;"></text></span>
+					{else}
+					<span class="level2">升级费￥<text style="font-size:5.5vw;">{$fenxiao[grade][1][money]}</text></span>
+					{/if}
+				</div>
+			</div>
+			<div class="tab_content" {if $type!=2}style="display: none;"{/if}>
+				<div class="main row">
+					{if $fenxiao[level]==3}
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][2][commission1]}<text style="font-size:3.9vw">%</text></span>
+							<span>一级代理</span>
+						</div>
+						<span>享受一级代理佣金收益{$fenxiao[commission][2][commission1]}%提成</span>
+					</div>
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][2][commission2]}<text style="font-size:3.9vw">%</text></span>
+							<span>二级代理</span>						
+						</div>
+						<span>享受二级代理佣金收益{$fenxiao[commission][2][commission2]}%提成</span>
+					</div>
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][2][commission3]}<text style="font-size:3.9vw">%</text></span>
+							<span>三级代理</span>
+						</div>
+						<span>享受三级代理佣金收益{$fenxiao[commission][2][commission3]}%提成</span>
+					</div>
+					{/if}
+					{if $fenxiao[level]==2}
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][2][commission1]}<text style="font-size:3.9vw">%</text></span>
+							<span>一级代理</span>
+						</div>
+						<span>享受一级代理佣金收益{$fenxiao[commission][2][commission1]}%提成</span>
+					</div>
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][2][commission2]}<text style="font-size:3.9vw">%</text></span>
+							<span>二级代理</span>						
+						</div>
+						<span>享受二级代理佣金收益{$fenxiao[commission][2][commission2]}%提成</span>
+					</div>
+					{/if}
+					{if $fenxiao[level]==1}
+					<div class="level column">
+						<div class="level_num column">
+							<span>{$fenxiao[commission][2][commission1]}<text style="font-size:3.9vw">%</text></span>
+							<span>一级代理</span>
+						</div>
+						<span>享受一级代理佣金收益{$fenxiao[commission][2][commission1]}%提成</span>
+					</div>
+					{/if}
+				</div>
+				<div class="buy column">
+					<span>晋升【{$fenxiao[grade][2][grade]}】后将享有以上的高级权益</span>
+					{if $user['level']>=3}
+					<span>当前身份<text style="font-size:5.5vw;"></text></span>
+					{else}
+					<span>升级费￥<text style="font-size:5.5vw;">{$fenxiao[grade][2][money]}</text></span>
+					{/if}
+				</div>
+			</div>
+		</div>
+		<div class='pay' onclick="pay()">立即升级</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var level = {$user[level]};
+	var cur = $('.sel').attr('data-type')
+	if(level-1<cur){
+		$(".pay").css('display','block');
+	}else{
+		$(".pay").css('display','none');
+	}
+	$(".tab_item").click(function(){
+		var index=$(this).index();
+		$(this).addClass("sel").siblings().removeClass("sel");
+		$(".tab_content").eq(index).show().siblings().hide()
+		var cur = $(this).attr('data-type')
+		if(level-1<cur){
+			$(".pay").css('display','block');
+		}else{
+			$(".pay").css('display','none');
+		}
+	})
+	var ua = navigator.userAgent.toLowerCase();
+	var isWeixin = ua.indexOf('micromessenger') != -1;
+	function pay(){
+		var type  = '{$type}';
+		let level = $('.sel').attr('data-type');
+		if (!isWeixin) {
+	    	// alert('这不是通过微信内置浏览器');
+	    	window.location.href="{php echo $this->getMobileUrl('wappay')}"+'&style=upgrade&type='+type+'&level='+level
+		}else{
+		    // alert('微信内置浏览器');
+		    callpay()
+		}
+	}
+</script>
+</html>

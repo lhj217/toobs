@@ -1,0 +1,114 @@
+html,body,p{
+	margin:0;
+	padding:0;
+}
+.container{
+	position:fixed;
+	width:100vw;
+	height:100vh;
+	font-size:3.6vw;
+	background:#F5F3F8;
+}
+.title{
+	margin:30px 0 6px;
+}
+.title,.mymoney{
+	color:#3C1B8F;
+	text-align: center;
+}
+.mymoney>text{
+	font-size:8vw;
+	font-weight: bold;
+}
+.getMoney{
+	width:80vw;
+	padding:4vw 0 ;
+	margin:5vw auto;
+	border-radius: 6px;
+	background:#fff;
+	box-shadow: 0 0 10px rgba(78,46,153,0.6);
+}
+.notice{
+	color:#414141;
+	text-align: center;
+	font-size:4vw;
+	font-weight: bold;
+}
+.row{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.between{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+.money{
+	width:82vw;
+	margin:0 4vw;
+}
+.btn{
+	width:16vw;
+	height:7vw;
+	font-size:3.2vw;
+	line-height: 7vw;
+	border-radius: 3.5vw ;
+	text-align: center;
+	color:#fff;
+	background:#4E2E99;
+}
+.moneyItem{
+	width:70vw;
+	margin:5vw 0 16px 0;
+}
+.num>span{
+	font-size:6vw;
+	font-weight: bold;
+	color:#3C1A8F;
+	margin-right:1vw;
+}
+input{
+	outline: none;
+	border:0;
+	border-radius: 0;
+	background: transparent;
+}
+.moneyItem:nth-child(1){
+	margin-top:3vw;
+	padding:3vw 0 ;
+	border-bottom:1px solid #F2F2F2;
+}
+.wechat{
+	width:6vw;
+}
+.moneyItem>span{
+	font-weight: bold;
+}
+.free{
+	color:#4E2F99;
+}
+.time{
+	margin-left:12vw;
+	color:#AFAFB0;
+	font-size:3vw;
+}
+.submit{
+	width:60vw;
+	margin:14vw auto 2vw;
+	height:11vw;
+	line-height: 11vw;
+	font-size:4vw;
+	border-radius: 5.5vw ;
+	text-align: center;
+	color:#fff;
+	font-weight: bold;
+	background:#4E2E99;
+}
+.cashNotice{
+	text-align: center;
+	color:#AFAFB0;
+	font-size:3vw;
+	display: block;
+}

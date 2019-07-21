@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<script src="../addons/hc_face/template/mobile/js/jquery.js?{$_W['timestamp']}"></script>
+	<script src="../addons/hc_face/template/mobile/js/common.js?{$_W['timestamp']}"></script>
+	<link rel="stylesheet" type="text/css" href="../addons/hc_face/template/mobile/css/swiper.css?{$_W['timestamp']}">
+	<link rel="stylesheet" type="text/css" href="../addons/hc_face/template/mobile/css/index.css?{$_W['timestamp']}">
+	<script src="../addons/hc_face/template/mobile/js/swiper.min.js?{$_W['timestamp']}"></script>
+	<title>{$basic['title']}</title>
+	<script type="text/javascript">
+		document.onreadystatechange = loadingChange;//当页面加载状态改变的时候执行这个方法.  
+		function loadingChange() {
+			if (document.readyState == "Loading") {//当页面加载状态为完全结束时进入   
+				$(".container").hide()
+			}
+			if (document.readyState == "complete") {//当页面加载状态为完全结束时进入 
+				$(".shodow").hide()
+				$(".container").show()
+			}
+		}
+
+	</script>
+	<style type="text/css">
+
+	</style>
+	{template 'common/share'}
+</head>
+
+<body>
+	<div class="shodow row">
+		<div class="loadings">
+			<img class="loading_0" src="../addons/hc_face/template/mobile/images/loading_0.png">
+			<img class="loading_img loading_1" src="../addons/hc_face/template/mobile/images/loading_1.png">
+			<img class="loading_img loading_2" src="../addons/hc_face/template/mobile/images/loading_2.png">
+			<img class="loading_img loading_3" src="../addons/hc_face/template/mobile/images/loading_3.png">
+			<img class="loading_img loading_4" src="../addons/hc_face/template/mobile/images/loading_4.png">
+			<img class="loading_img loading_5" src="../addons/hc_face/template/mobile/images/loading_5.png">
+		</div>
+	</div>
+
+	<div class="shareMain" onclick="hide()" style="display: none;">
+		<img class="share_btn" src="../addons/hc_face/template/mobile/images/share.png">
+	</div>
+	{if $basic[tousu]==1}
+	<div style="position: fixed;top:4vw;right:4vw;width:12vw;z-index:1;width:12vw;height:12vw;color:#fff;line-height:12vw;text-align:center;border-radius:50%;background:rgba(255,255,255,0.5);"
+		onclick="window.location.href='{php echo $this->getMobileUrl('complain',array('act'=>page1))}'" alt="">投诉</div>
+	{/if}
+	<div class="container">
+		<!-- 新用户首页开始 -->
+		<div id="first" class="first" style="display: none;{if $basic['hand']!=1}justify-content:center;{/if}">
+			{if $basic['sort']!=1}
+			{if $basic['hand']==1}
+			<div class="tablist" id="tablist">
+				<div class="tabitem row">
+					<img class="tab_img" style="display: none;" src="../addons/hc_face/template/mobile/images/tab1.png">
+					<img class="tab_img sel" src="../addons/hc_face/template/mobile/images/tab_sel1.png">
+				</div>
+				<div class="tabitem row">
+					<img class="tab_img" src="../addons/hc_face/template/mobile/images/tab2.png">
+					<img class="tab_img sel" style="display: none;"
+						src="../addons/hc_face/template/mobile/images/tab_sel2.png">
+				</div>
+			</div>
+			{/if}
+			<div class="firstDiv"
+				style="background: url(../addons/hc_face/template/mobile/images/first.png) no-repeat;background-size: 100% 100%">
+				<div class="tabDiv">
+					{if empty($basic['gets'])}
+					<div class="firstTop">
+						<span>已有{$people}人获取报告</span>
+						<div class="userInfo firstrow">
+							<div class="avatarDiv">
+								<div class="avatarShadow"></div>
+								<img class="avatar blur" src="{$_W['siteroot']}{$last['avatar']}">
+							</div>
+							<span><text class="blur">用户{$last['name']}</text>刚刚获取面相报告</span>
+						</div>
+					</div>
+					{else}
+					<div class="firstTop">
+						<span style="font-size:6vw">{$basic['title']}</span>
+					</div>
+					{/if}
+					<div class="firstBottom">
+						<span>
+							{if empty($basic['remark'])}
+							相由心生，境随心转。面相学通过观察面部特征来解码人生命运，{$basic['title']}则利用人工智能深度神经网络学习技术与人脸识别技术将这一中国传统文化重新呈现。
+							{else}
+							{$basic['remark']}
+							{/if}
+						</span>
+						<div class="firstTab">
+							<div class="firstItem">
+								<img src="../addons/hc_face/template/mobile/images/firsticon1.png">
+								<span class="bg_a">面相学</span>
+							</div>
+							<div class="firstItem">
+								<img src="../addons/hc_face/template/mobile/images/firsticon2.png">
+								<span class="bg_a">人工智能</span>
+							</div>
+							<div class="firstItem">
+								<img src="../addons/hc_face/template/mobile/images/firsticon3.png">
+								<span class="bg_a">人脸定位</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tabDiv" style="display: none">
+					{if empty($basic['gets'])}
+					<div class="firstTop" style="height:36vw;">
+						<span>已有{$people}人获取报告</span>
+						<div class="userInfo firstrow">
+							<div class="avatarDiv">
+								<div class="avatarShadow"></div>
+								<img class="avatar blur" src="{$_W['siteroot']}{$last['avatar']}">
+							</div>
+							<span><text class="blur">用户{$last['name']}</text>刚刚获取手相报告</span>
+						</div>
+					</div>
+					{else}
+					<div class="firstTop" style="height:36vw;">
+						<span style="font-size:6vw">{$basic['title']}</span>
+					</div>
+					{/if}
+					<div class="firstBottom">
+						<span>
+							{if empty($basic['handremark'])}
+							手相学通过观察面部特征来解码人生命运，{$basic['title']}则利用人工智能深度神经网络学习技术与手相识别技术将这一中国传统文化重新呈现。
+							{else}
+							{$basic['handremark']}
+							{/if}
+						</span>
+						<div class="firstTab">
+							<div class="firstItem">
+								<img class="icon_img" src="../addons/hc_face/template/mobile/images/firsticon11.png">
+								<span>手相学</span>
+							</div>
+							<div class="firstItem">
+								<img class="icon_img" src="../addons/hc_face/template/mobile/images/firsticon12.png">
+								<span>人工智能</span>
+							</div>
+							<div class="firstItem">
+								<img class="icon_img" src="../addons/hc_face/template/mobile/images/firsticon13.png">
+								<span>手定位</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				{/if}
+				<!-- ----------------------------------------------------- -->
+				{if $basic['sort']==1}
+				{if $basic['hand']==1}
+				<div class="tablist" id="tablist">
+					<div class="tabitem row">
+						<img class="tab_img" style="display: none;"
+							src="../addons/hc_face/template/mobile/images/tab2.png">
+						<img class="tab_img sel" src="../addons/hc_face/template/mobile/images/tab_sel2.png">
+					</div>
+					<div class="tabitem row">
+						<img class="tab_img" src="../addons/hc_face/template/mobile/images/tab1.png">
+						<img class="tab_img sel" style="display: none;"
+							src="../addons/hc_face/template/mobile/images/tab_sel1.png">
+					</div>
+				</div>
+				{/if}
+				<div class="firstDiv"
+					style="background: url(../addons/hc_face/template/mobile/images/first11.png) no-repeat;background-size: 100% 100%">
+
+					<div class="tabDiv">
+						{if empty($basic['gets'])}
+						<div class="firstTop" style="height:36vw;">
+							<span>已有{$people}人获取报告</span>
+							<div class="userInfo firstrow">
+								<div class="avatarDiv">
+									<div class="avatarShadow"></div>
+									<img class="avatar blur" src="{$_W['siteroot']}{$last['avatar']}">
+								</div>
+								<span><text class="blur">用户{$last['name']}</text>刚刚获取手相报告</span>
+							</div>
+						</div>
+						{else}
+						<div class="firstTop" style="height:36vw;">
+							<span style="font-size:6vw">{$basic['title']}</span>
+						</div>
+						{/if}
+						<div class="firstBottom">
+							<span>
+								{if empty($basic['handremark'])}
+								手相学通过观察面部特征来解码人生命运，{$basic['title']}则利用人工智能深度神经网络学习技术与手相识别技术将这一中国传统文化重新呈现。
+								{else}
+								{$basic['handremark']}
+								{/if}
+							</span>
+							<div class="firstTab">
+								<div class="firstItem">
+									<img class="icon_img"
+										src="../addons/hc_face/template/mobile/images/firsticon11.png">
+									<span>手相学</span>
+								</div>
+								<div class="firstItem">
+									<img class="icon_img"
+										src="../addons/hc_face/template/mobile/images/firsticon12.png">
+									<span>人工智能</span>
+								</div>
+								<div class="firstItem">
+									<img class="icon_img"
+										src="../addons/hc_face/template/mobile/images/firsticon13.png">
+									<span>手定位</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tabDiv" style="display: none">
+						{if empty($basic['gets'])}
+						<div class="firstTop">
+							<span>已有{$people}人获取报告</span>
+							<div class="userInfo firstrow">
+								<div class="avatarDiv">
+									<div class="avatarShadow"></div>
+									<img class="avatar blur" src="{$_W['siteroot']}{$last['avatar']}">
+								</div>
+								<span><text class="blur">用户{$last['name']}</text>刚刚获取面相报告</span>
+							</div>
+						</div>
+						{else}
+						<div class="firstTop">
+							<span style="font-size:6vw">{$basic['title']}</span>
+						</div>
+						{/if}
+						<div class="firstBottom">
+							<span>
+								{if empty($basic['remark'])}
+								相由心生，境随心转。面相学通过观察面部特征来解码人生命运，{$basic['title']}则利用人工智能深度神经网络学习技术与人脸识别技术将这一中国传统文化重新呈现。
+								{else}
+								{$basic['remark']}
+								{/if}
+							</span>
+							<div class="firstTab">
+								<div class="firstItem">
+									<img src="../addons/hc_face/template/mobile/images/firsticon1.png">
+									<span class="bg_a">面相学</span>
+								</div>
+								<div class="firstItem">
+									<img src="../addons/hc_face/template/mobile/images/firsticon2.png">
+									<span class="bg_a">人工智能</span>
+								</div>
+								<div class="firstItem">
+									<img src="../addons/hc_face/template/mobile/images/firsticon3.png">
+									<span class="bg_a">人脸定位</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					{/if}
+
+					<!-- ----------------------------------------------------- -->
+
+
+					<script type="text/javascript">
+						var nav_tab = new goodsList("tablist", "tabitem", "tabDiv", "tabDivs", "{$basic['sort']}");
+						nav_tab.main()
+					</script>
+				</div>
+				{if $basic['sort']!=1}
+				<div>
+					<div class="tabDivs">
+						<div class="upload_photo firstrow"
+							onclick="window.location.href='{php echo $this->getMobileUrl('upload')}'">
+							<img src="../addons/hc_face/template/mobile/images/hand.png">
+							<span style="font-size:4vw;">获取面相报告</span>
+						</div>
+					</div>
+					<div class="tabDivs" style="display: none">
+						<div class="upload_photo firstrow"
+							onclick="window.location.href='{php echo $this->getMobileUrl('upload_hand')}'">
+							<img src="../addons/hc_face/template/mobile/images/hand.png">
+							<span style="font-size:4vw;">获取手相报告</span>
+						</div>
+					</div>
+				</div>
+				{else}
+				<div>
+					<div class="tabDivs">
+						<div class="upload_photo firstrow"
+							onclick="window.location.href='{php echo $this->getMobileUrl('upload_hand')}'" style="background: url(../addons/hc_face/template/mobile/images/btn13.png) no-repeat;background-size: 100% 100%">
+							<img src="../addons/hc_face/template/mobile/images/hand.png">
+							<span style="font-size:4vw;">获取手相报告</span>
+						</div>
+					</div>
+					<div class="tabDivs" style="display: none;">
+						<div class="upload_photo firstrow"
+							onclick="window.location.href='{php echo $this->getMobileUrl('upload')}'">
+							<img src="../addons/hc_face/template/mobile/images/hand.png">
+							<span style="font-size:4vw;">获取面相报告</span>
+						</div>
+					</div>
+				</div>
+				{/if}
+			</div>
+			<!-- 新用户首页结束 -->
+			<!-- 老用户首页开始 -->
+			<div class="second" style="display: none;">
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+						{loop $banner $index $item}
+						<div class="swiper-slide">
+							<img class="banners" src="{$item['banner']}" {if
+								!empty($item['link'])}onclick="window.location.href='{$item['link']}'" {/if}> </div>
+								{/loop} </div> <div class="swiper-pagination"></div>
+					</div>
+					<div class="navlist">
+						<div class="nav">
+							<div class="navdetail row"
+								onclick="window.location.href='{php echo $this->getMobileUrl('my')}'">
+								<img src="../addons/hc_face/template/mobile/images/icon1.png">
+								<div class="content column">
+									<span>面相{if $basic['hand']==1}/手相{/if}报告</span>
+									<span>财运通畅，有福气</span>
+								</div>
+							</div>
+						</div>
+						{if empty($basic['rank'])}
+						<div class="nav">
+							<div class="navdetail row"
+								onclick="window.location.href='{php echo $this->getMobileUrl('rank')}'">
+								<img src="../addons/hc_face/template/mobile/images/icon2.png">
+								<div class="content column">
+									<span>面相{if $basic['hand']==1}/手相{/if}排行</span>
+									<span>当前排名第{$rank}名</span>
+								</div>
+							</div>
+						</div>
+						{/if}
+						{if empty($basic['share'])}
+						<div class="nav" onclick="show()">
+							<div class="navdetail row">
+								<img src="../addons/hc_face/template/mobile/images/icon3.png">
+								<div class="content column">
+									<span>分享</span>
+									<span>邀请更多好友/群友</span>
+								</div>
+							</div>
+						</div>
+						{/if}
+					</div>
+					<div class="footer row" style="z-index:6;">
+						<div class="index" onclick="window.location.href='{php echo $this->getMobileUrl('more')}'">
+							<img src="{if empty($nav['left_icon'])}../addons/hc_face/template/mobile/images/index.png{else}{php echo tomedia($nav['left_icon'])}{/if}">
+							<span>{if empty($nav['left_text'])}查看更多{else}{$nav['left_text']}{/if}</span>
+						</div>
+						{if $basic['hand']==1}
+						<img class="publish" onclick="sel_nav()"
+							src="../addons/hc_face/template/mobile/images/publish.png">
+						{else}
+						<img class="publish" onclick="window.location.href='{php echo $this->getMobileUrl('upload')}'"
+							src="../addons/hc_face/template/mobile/images/publish.png">
+						{/if}
+						<div class="my" onclick="window.location.href='{php echo $this->getMobileUrl('buy')}'">
+							<img src="{if empty($nav['right_icon'])}../addons/hc_face/template/mobile/images/my.png{else}{php echo tomedia($nav['right_icon'])}{/if}">
+							<span>{if empty($nav['right_text'])}购买报告{else}{$nav['right_text']}{/if}</span>
+						</div>
+					</div>
+					<div class="nav_icon row">
+						<img class="nav_icon1" onclick="jump(1)"
+							src="../addons/hc_face/template/mobile/images/nav_icon1.png">
+						<img class="nav_icon1" onclick="jump(2)"
+							src="../addons/hc_face/template/mobile/images/nav_icon2.png">
+					</div>
+				</div>
+				<!-- 老用户首页结束 -->
+			</div>
+</body>
+<script type="text/javascript">
+	var status = 1;
+	function jump(url) {
+		if (url == 1) {
+			window.location.href = "{php echo $this->getMobileUrl('upload')}"
+			$(".nav_icon").animate({
+				"opacity": "0",
+				"bottom": "0",
+				"z-index": 0
+			},
+				100,
+				"linear",
+				function () {
+					// status = 1
+				})
+		} else {
+			window.location.href = "{php echo $this->getMobileUrl('upload_hand')}";
+			$(".nav_icon").animate({
+				"opacity": "0",
+				"bottom": "0",
+				"z-index": 0
+			},
+				100,
+				"linear",
+				function () {
+					// status = 1
+				})
+		}
+
+	}
+
+
+	$(function () {
+		$.ajax({
+			type: "GET",
+			url: "{php echo $this->getMobileUrl('checkauth')}",
+			dataType: "json",
+			success: function (data) {
+				if (data.code == 1) {
+					$(".second").show();
+					$(".first").hide();
+					var swiper = new Swiper('.swiper-container',
+
+						{
+
+							autoplay: true,
+
+							controller: true,
+
+							loop: true,
+
+							pagination: {
+
+								el: '.swiper-pagination',
+
+							}
+
+						});
+				} else {
+					$(".second").hide();
+					$(".first").show();
+				}
+			}
+		});
+	});
+
+	function show() {
+		$(".shareMain").show()
+	}
+	function hide() {
+		$(".shareMain").hide()
+	}
+	function sel_nav() {
+		if (status == 1) {
+			$(".nav_icon").animate({
+				"opacity": "1",
+				"bottom": "25vw",
+				"z-index": 33
+			},
+				100,
+				"linear",
+				function () {
+					status = 2
+				})
+		} else if (status == 2) {
+			$(".nav_icon").animate({
+				"opacity": "0",
+				"bottom": "0",
+				"z-index": 0
+			},
+				100,
+				"linear",
+				function () {
+					status = 1
+				})
+		}
+
+	}
+</script>
+
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<script src="../addons/hc_face/template/mobile/js/jquery.js"></script>
+	<script src="../addons/hc_face/template/mobile/js/jquery.bxslider.min.js"></script>
+	<title>手相报告</title>
+	<link rel="stylesheet" type="text/css" href="../addons/hc_face/template/mobile/css/report_hand.css?{$_W['timestamp']}">
+	<script src="../addons/hc_face/template/mobile/js/qrcode.js?{$_W['timestamp']}"></script>
+	{template 'common/share'}
+	<script type="text/javascript">
+
+	//调用微信JS api 支付
+
+	function callpay(type,rid)
+
+	{
+
+		var paytype = '{$pay['paytype']}';
+		var ua = window.navigator.userAgent.toLowerCase();
+
+		if(paytype!=1 && ua.match(/MicroMessenger/i) == 'micromessenger'){
+
+			if (typeof WeixinJSBridge == "undefined"){
+
+				if( document.addEventListener ){
+
+					document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+
+				}else if (document.attachEvent){
+
+					document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+
+					document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+
+				}
+
+			}else{
+
+				$.ajax({
+
+					type: "GET",
+
+					url: "{php echo $this->getMobileUrl('pay')}",
+
+					data: {type:type,rid:rid},
+
+					dataType: "json",
+
+					success: function(data){
+
+						var jsApiParameters = data;
+						console.log(jsApiParameters);
+						WeixinJSBridge.invoke(
+
+							'getBrandWCPayRequest',
+
+							jsApiParameters,
+
+							function(res){
+								WeixinJSBridge.log(res.err_msg);
+								if(res.err_msg == "get_brand_wcpay_request:ok" ){
+									window.location.reload();
+								}
+							}
+
+							);
+
+					}
+
+				});
+
+			}
+
+		}else{
+			$.ajax({
+
+				type: "GET",
+
+				url: "{php echo $this->getMobileUrl('pay')}",
+
+				data: {type:type,rid:rid},
+
+				dataType: "json",
+
+				success: function(data){
+					if(data.code==1){
+						setTimeout(function(){
+							window.location.href=data.url;
+						}, 1000);
+					}
+				}
+			});
+		}
+
+	}
+	document.onreadystatechange = loadingChange;//当页面加载状态改变的时候执行这个方法.  
+	function loadingChange()   
+	{   	
+        if(document.readyState == "complete"){//当页面加载状态为完全结束时进入
+        	$(".shodowS").hide() 
+        }
+    }   
+
+</script>
+<style type="text/css">
+</style>
+</head>
+<body>
+	<div class="shodowS row">
+		<div class="loadings">
+			<img class="loading_0" src="../addons/hc_face/template/mobile/images/loading_0.png">
+			<img class="loading_img loading_1" src="../addons/hc_face/template/mobile/images/loading_1.png">
+			<img class="loading_img loading_2" src="../addons/hc_face/template/mobile/images/loading_2.png">
+			<img class="loading_img loading_3" src="../addons/hc_face/template/mobile/images/loading_3.png">
+			<img class="loading_img loading_4" src="../addons/hc_face/template/mobile/images/loading_4.png">
+			<img class="loading_img loading_5" src="../addons/hc_face/template/mobile/images/loading_5.png">
+		</div>
+	</div>
+	{if $basic[tousu]==1}
+	<div style="position: fixed;top:4vw;right:4vw;width:12vw;z-index:1;width:12vw;height:12vw;color:#fff;line-height:12vw;text-align:center;border-radius:50%;background:rgba(255,255,255,0.5);"
+
+		onclick="window.location.href='{php echo $this->getMobileUrl('complain',array('act'=>page1))}'" alt="">投诉</div>
+	{/if}
+	<div class="container">
+		<div class="title row">
+			{$loop['name']}的手相报告
+		</div>
+		<div class="photo">
+			<div class="light"></div>
+			<img id="myPic" src="{$thumb}">
+		</div>
+		<div class="result" style="margin-top:7vw;padding-bottom:8vw;" src="../addons/hc_face/template/mobile/images/test.png">
+			<div class="content_title">掌纹类型分析</div>
+			<span class="content">{$loop['type']}</span>
+			<div class="score">
+				<div class="column">
+					<div class="detail_score row">
+						<span>手相评分：<text style="font-size:5vw;">{$loop['score']}</text></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<span>总分：100</span>
+					</div>
+					<div class="progress">
+						<div class="progress_active"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="result" style="padding-bottom:8vw;" src="../addons/hc_face/template/mobile/images/test.png">
+			<div class="content_title">掌线分析</div>
+			<span class="hand_title"><<<&nbsp;从智慧线看个人能力&nbsp;>>></span>
+			<img class="hand_img" src="../addons/hc_face/template/mobile/images/wisdom.png">
+			<span class="content">{$loop['zhihui']}</span>
+			<span class="line"></span>
+			<span class="hand_title"><<<&nbsp;从感情线看感情特点&nbsp;>>></span>
+			<img class="hand_img" src="../addons/hc_face/template/mobile/images/emotion.png">
+			<span class="content">{$loop['ganqing']}</span>
+			<span class="line"></span>
+			<span class="hand_title"><<<&nbsp;从生命线看凶吉福祸&nbsp;>>></span>
+			<img class="hand_img" src="../addons/hc_face/template/mobile/images/life.png">
+			{if empty($loop['shengming'])}
+			<div class="lock">
+				<span class="lock_one"></span>
+				<span class="lock_two"></span>
+				<div class="unLock row">
+					<img class="hand_lock" src="../addons/hc_face/template/mobile/images/hand_lock.png">
+					<span onclick="pay('sm','{$rid}')">{$list[3][price]}元解锁凶吉福祸</span>
+				</div>
+			</div>
+			{else}
+			<span class="content">{$loop['shengming']}</span>
+			{/if}
+		</div>
+		<div class="upload_photo" onclick="window.location.href='{php echo $this->getMobileUrl('index')}'">
+			返回我的手相首页
+		</div>
+		<div class="result" style="padding-bottom:8vw;" src="../addons/hc_face/template/mobile/images/test.png">
+			<div class="content_title">指相分析</div>
+			<span class="hand_title"><<<&nbsp;食指看你的控制欲望&nbsp;>>></span>
+			<img class="hand_img" src="../addons/hc_face/template/mobile/images/index_finger.png">
+			<span class="content">{$loop['zhixiang']}</span>
+			<span class="line"></span>
+			<span class="hand_title"><<<&nbsp;中指看你的一生运势&nbsp;>>></span>
+			<img class="hand_img" src="../addons/hc_face/template/mobile/images/middle_finger.png">
+			{if empty($loop['yunshi'])}
+			<div class="lock">
+				<span class="lock_one"></span>
+				<span class="lock_two"></span>
+				<div class="unLock row">
+					<img class="hand_lock" src="../addons/hc_face/template/mobile/images/hand_lock.png">
+					<span onclick="pay('ys','{$rid}')">{$list[4][price]}元解锁一生运势</span>
+				</div>
+			</div>
+			{else}
+			<span class="content">{$loop['yunshi']}</span>
+			{/if}
+			<span class="line"></span>
+			<span class="hand_title"><<<&nbsp;小指看你的子女情况&nbsp;>>></span>
+			<img class="hand_img" src="../addons/hc_face/template/mobile/images/little_finger.png">
+			<span class="content">{$loop['zinv']}</span>
+		</div>
+		<div class="footer row" style="z-index:6;">
+				<div class="index" onclick="window.location.href='{php echo $this->getMobileUrl('more')}'">
+					<img src="{if empty($nav['left_icon'])}../addons/hc_face/template/mobile/images/index.png{else}{php echo tomedia($nav['left_icon'])}{/if}">
+					<span>{if empty($nav['left_text'])}查看更多{else}{$nav['left_text']}{/if}</span>
+				</div>
+				{if $basic['hand']==1}
+				<img class="publish" onclick="sel_nav()" src="../addons/hc_face/template/mobile/images/publish.png">
+				{else}
+				<img class="publish" onclick="window.location.href='{php echo $this->getMobileUrl('upload')}'"
+					src="../addons/hc_face/template/mobile/images/publish.png">
+				{/if}
+				<div class="my" onclick="window.location.href='{php echo $this->getMobileUrl('buy')}'">
+					<img src="{if empty($nav['right_icon'])}../addons/hc_face/template/mobile/images/my.png{else}{php echo tomedia($nav['right_icon'])}{/if}">
+					<span>{if empty($nav['right_text'])}购买报告{else}{$nav['right_text']}{/if}</span>
+				</div>
+			</div>
+			<div class="nav_icon row">
+				<img class="nav_icon1" onclick="jump(1)"
+					src="../addons/hc_face/template/mobile/images/nav_icon1.png">
+				<img class="nav_icon1"
+					onclick="jump(2)"
+					src="../addons/hc_face/template/mobile/images/nav_icon2.png">
+			</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var ua = navigator.userAgent.toLowerCase();
+	var isWeixin = ua.indexOf('micromessenger') != -1;
+	function pay(types,rid){
+		if (!isWeixin) {
+	    	// alert('这不是通过微信内置浏览器');
+	    	window.location.href="{php echo $this->createMobileUrl('wappay')}"+'&type='+types+'&rid='+rid
+	    }else{
+		    // alert('微信内置浏览器');
+		    callpay(types,rid)
+		}
+	}
+	var score = "{$loop['score']}";
+	$(".progress_active").animate({
+		"width":0.7*score+'vw',
+	},
+	300,
+	"linear",
+	function(){
+		status=2
+	})
+
+
+
+	// 底部进面相或手相的按钮
+	var status=1;
+
+	function jump(url) {
+		if (url == 1) {
+			window.location.href = "{php echo $this->getMobileUrl('upload')}"
+			$(".nav_icon").animate({
+				"opacity": "0",
+				"bottom": "0",
+				"z-index": 0
+			},
+				100,
+				"linear",
+				function () {
+					status = 1
+				})
+		} else {
+			window.location.href = "{php echo $this->getMobileUrl('upload_hand')}";
+			$(".nav_icon").animate({
+				"opacity": "0",
+				"bottom": "0",
+				"z-index": 0
+			},
+				100,
+				"linear",
+				function () {
+					status = 1
+				})
+		}
+
+	}
+	function sel_nav(){
+		if(status==1){
+			$(".nav_icon").animate({
+				"opacity":"1",
+				"bottom":"25vw",
+				"z-index":33
+			},
+			100,
+			"linear",
+			function(){
+				status=2
+			})
+		}else if(status==2){
+			$(".nav_icon").animate({
+				"opacity":"0",
+				"bottom":"0",
+				"z-index":0
+			},
+			100,
+			"linear",
+			function(){
+				status=1
+			})
+		}
+
+	}
+</script>
+</html>

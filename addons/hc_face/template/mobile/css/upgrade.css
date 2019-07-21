@@ -1,0 +1,117 @@
+html,body{
+	margin:0;
+	padding:0;
+}
+.container{
+	position:fixed;
+	top:0;
+	width:100vw;
+	height:100vh;
+	overflow-y:scroll; 
+	background:url(../images/upgrade_bg.png) no-repeat;
+	background-size:100% 100%;
+}
+.title{
+	width:100vw;
+	margin:10vw auto 0;
+	display: block;
+}
+.tab{
+	width:70vw;
+	margin:3vw auto 6vw;
+	border:1px solid #fff;
+	border-radius: 6px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	height:8vw;
+}
+.tab_item{
+	height:8vw;
+	line-height: 8vw;
+	width:35vw;
+	font-size:3.6vw;
+	text-align: center;
+	background:#fff;
+}
+.tab_item:nth-child(1){
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+}
+
+.tab_item:nth-child(3){
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+.sel{
+	background:#F03836;
+	color:#fff;
+}
+.main{
+	justify-content: space-around;
+}
+.tab_content{
+	width:84vw;
+	padding: 6vw 3vw;
+	margin:0 auto;
+	border-radius: 6px;
+	background:#fff;
+}
+.row{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.column{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.level{
+	width:25vw;
+	font-size:3.2vw;
+	justify-content: center;
+}
+.level_num{
+	width:23vw;
+	height:18.16vw;
+	background:url(../images/upgrade_iocn.png) no-repeat;
+	background-size:100% 100%;
+	margin-bottom:6px;
+	padding:2vw 0 1.2vw;
+	color:#fff;
+	justify-content: space-between;
+}
+.level>span{
+	text-align: center;
+	display: block;
+	color:#333;
+}
+.level_num>span:nth-child(1){
+	font-size:7vw;
+	color:#F2373B;
+}
+.buy{
+	margin-top:4vw;
+	font-size:3.2vw;
+	color:#EF3935;
+	font-weight: bold;
+}
+.buy>span:nth-child(2){
+	font-size:3.6vw;
+	border:1px solid #EF3935;
+	border-radius:6px;
+	padding:1vw 4vw;
+	margin-top:4vw;
+}
+.pay{
+	width:100vw;
+	position: fixed;
+	bottom:0;
+	height:12vw;
+	line-height: 12vw;
+	color:#fff;
+	background:#F03836;
+	font-size:4vw;
+	text-align: center;
+}

@@ -1,0 +1,26 @@
+<script type="text/javascript" src="../addons/hc_face/template/mobile/js/jweixin-1.4.0.js"></script>
+<script type="text/javascript">
+	wx.config({
+        debug: false,
+        appId: '{$_W['account']['jssdkconfig']['appId']}', 
+        timestamp: '{$_W['account']['jssdkconfig']['timestamp']}', 
+        nonceStr: '{$_W['account']['jssdkconfig']['nonceStr']}', 
+        signature: '{$_W['account']['jssdkconfig']['signature']}',
+        jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline','openAddress','chooseWXPay','chooseImage','uploadImage'] 
+	});
+	var a=1;
+	 wx.ready(function () {
+	    wx.onMenuShareAppMessage({ 
+	        title: '{$forward['title']}',
+			desc: '{$forward['ctitle']}',
+			link: '{$forward['link']}',
+			imgUrl: '{$forward['img']}'
+		});
+
+		wx.onMenuShareTimeline({ 
+	        title: '{$forward['title']}',
+			link: '{$forward['link']}',
+			imgUrl: '{$forward['img']}'
+		});
+	 })
+</script>

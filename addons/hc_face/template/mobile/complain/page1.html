@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>投诉</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="../addons/hc_face/template/mobile/js/jquery.js"></script>
+    <style type="text/css">
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background: #EFEEF3;
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .title {
+            color: #A9A8AD;
+            font-size: 3.6vw;
+            margin: 4vw;
+            display: block;
+        }
+
+        .notice {
+            color: #646D95;
+            position: fixed;
+            bottom: 5vw;
+            left: 50%;
+            font-size: 3.8vw;
+            transform: translateX(-50%);
+        }
+
+        .list {
+            width: 94vw;
+            padding: 0 3vw;
+            background: #fff;
+        }
+
+        .item {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3vw 0;
+            font-size: 3.8vw;
+            color: #1E1E1E;
+            border-bottom: 1px solid #F8F8F8;
+        }
+
+        .item:last-child {
+            border-bottom: 0;
+        }
+
+        .item>img {
+            width: 1.6vw;
+            display: block;
+        }
+    </style>
+    <script type="text/javascript">
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <span class="title">请选择投诉该网页的原因：</span>
+        <div class="list">
+            <div class="item">
+                <span>网页包含欺诈信息（如：假红包）</span>
+                <img src="https://we7.heiguo.me/addons/hc_face/template/mobile/images/my_right.png" alt="">
+            </div>
+            <div class="item">
+                <span>网页内包含色情信息</span>
+                <img src="https://we7.heiguo.me/addons/hc_face/template/mobile/images/my_right.png" alt="">
+            </div>
+            <div class="item">
+                <span>网页内包含暴力恐怖信息</span>
+                <img src="https://we7.heiguo.me/addons/hc_face/template/mobile/images/my_right.png" alt="">
+            </div>
+            <div class="item">
+                <span>网页内包含政治敏感信息</span>
+                <img src="https://we7.heiguo.me/addons/hc_face/template/mobile/images/my_right.png" alt="">
+            </div>
+            <div class="item">
+                <span>网页在收集个人隐私信息（如：钓鱼链接）</span>
+                <img src="https://we7.heiguo.me/addons/hc_face/template/mobile/images/my_right.png" alt="">
+            </div>
+            <div class="item">
+                <span>网页内包含诱导分享/关注性质的内容</span>
+                <img src="https://we7.heiguo.me/addons/hc_face/template/mobile/images/my_right.png" alt="">
+            </div>
+            <div class="item">
+                <span>网页可能包含谣言信息</span>
+                <img src="https://we7.heiguo.me/addons/hc_face/template/mobile/images/my_right.png" alt="">
+            </div>
+            <div class="item">
+                <span>网页内包含赌博信息</span>
+                <img src="https://we7.heiguo.me/addons/hc_face/template/mobile/images/my_right.png" alt="">
+            </div>
+        </div>
+        <!-- <span class="notice">遇到网页流量被劫持怎么办</span> -->
+        <span class="notice" onclick="window.location.href='{php echo $this->getMobileUrl('complain',array('act'=>page3))}'">投诉须知</span>
+    </div>
+</body>
+<script type="text/javascript">
+    $(".item").click(function () {
+        window.location.href = "{php echo $this->getMobileUrl('complain',array('act'=>page2))}"
+    })
+</script>
+
+</html>
