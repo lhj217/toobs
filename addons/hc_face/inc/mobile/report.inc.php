@@ -55,5 +55,5 @@ if (empty($fenxiao["qr"])) {
     file_put_contents($path, file_get_contents("https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" . UrlEncode($con["ticket"])));
 }
 $qrcode = tomedia("/addons/hc_face/qrcode/" . $uid . ".png") . "?" . time();
- $this->template("report");
+include $this->template("report");
 ?>
